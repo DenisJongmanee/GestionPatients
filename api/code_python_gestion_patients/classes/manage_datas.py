@@ -27,11 +27,11 @@ class ManageDatas:
             index += 1  # incrémente le numero d'intervention
         return dictionnaire_retour
 
-    def ajouter_patient(self, patient, nom, prenom, date):
+    def ajouter_patient(self, nom, prenom, date):
         # int id_patient /str nom et prenom/date datenaissance
         # methode pour ajouter un patient
-        instructionBDD = f"INSERT INTO Patient (idPatient, nom, prenom, dateNaissance) " \
-                         f"VALUES ({patient}, '{nom}', '{prenom}', {date};)"
+        instructionBDD = f"INSERT INTO Patient (nom, prenom, dateNaissance) " \
+                         f"VALUES ('{nom}', '{prenom}', {date};)"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
@@ -50,12 +50,12 @@ class ManageDatas:
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
-    def ajouter_service(self, service, nom, zone):
+    def ajouter_service(self, nom, zone):
         # int id_sejour /str nom et zone géographique
         # methode pour ajouter un service
 
-        instructionBDD = f"INSERT INTO Service (idService, nomService, ZoneGeographique) " \
-                         f"VALUES ({service}, '{nom}', '{zone}';)"
+        instructionBDD = f"INSERT INTO Service (nomService, ZoneGeographique) " \
+                         f"VALUES ('{nom}', '{zone}';)"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
@@ -73,11 +73,11 @@ class ManageDatas:
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
-    def ajouter_personnel(self, personnel, nom, prenom, date):
+    def ajouter_personnel(self, nom, prenom, date):
         # int id_personnel /str nom et prenom/date datenaissance
         # methode pour ajouter un personnel soignant
-        instructionBDD = f"INSERT INTO PersonnelSoignant (idPersonnel, nom, prenom, dateNaissance) " \
-                         f"VALUES ({personnel}, '{nom}', '{prenom}', {date};)"
+        instructionBDD = f"INSERT INTO PersonnelSoignant (nom, prenom, dateNaissance) " \
+                         f"VALUES ('{nom}', '{prenom}', {date};)"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
@@ -95,10 +95,10 @@ class ManageDatas:
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
-    def ajouter_sejour(self, sejour, patient, service, dateEntree, dateSortie, probleme, numeroDeLit):
+    def ajouter_sejour(self, patient, service, dateEntree, dateSortie, probleme, numeroDeLit):
         # methode pour ajouter un séjour associé à un patient
-        instructionBDD = f"INSERT INTO Sejour (idSejour, dateEntreeSejour, DateSortieSejour, Probleme, idPatient, NumLit) " \
-                         f"VALUES ({sejour}, '{dateEntree}', '{dateSortie}', {probleme}, {patient}, {numeroDeLit};)"
+        instructionBDD = f"INSERT INTO Sejour (dateEntreeSejour, DateSortieSejour, Probleme, idPatient, NumLit) " \
+                         f"VALUES ('{dateEntree}', '{dateSortie}', {probleme}, {patient}, {numeroDeLit};)"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 

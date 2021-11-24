@@ -17,9 +17,9 @@ def consulter(patient):
 def ajoutPatient():
     message = request.get_json(force=True)
     BaseDD = ManageDatas()
-    if "patient" in message and "nom" in message and "prenom" in message and "date" in message:
+    if "nom" in message and "prenom" in message and "date" in message:
         try :
-            BaseDD.ajouter_patient(message["patient"], message["nom"], message["prenom"], message["date"])
+            BaseDD.ajouter_patient(message["nom"], message["prenom"], message["date"])
             return "Ok"
         except:
             abort(500)
@@ -53,9 +53,9 @@ def suppressionPatient():
 def ajoutPersonnel():
     message = request.get_json(force=True)
     BaseDD = ManageDatas()
-    if "personnel" in message and "nom" in message and "prenom" in message and "date" in message:
+    if "nom" in message and "prenom" in message and "date" in message:
         try :
-            BaseDD.ajouter_personnel(message["personnel"], message["nom"], message["prenom"], message["date"])
+            BaseDD.ajouter_personnel(message["nom"], message["prenom"], message["date"])
             return "Ok"
         except:
             abort(500)
@@ -89,9 +89,9 @@ def suppressionPersonnel():
 def ajoutService():
     message = request.get_json(force=True)
     BaseDD = ManageDatas()
-    if "service" in message and "nom" in message and "zone" in message:
+    if "nom" in message and "zone" in message:
         try :
-            BaseDD.ajouter_service(message["service"], message["nom"], message["zone"])
+            BaseDD.ajouter_service(message["nom"], message["zone"])
             return "Ok"
         except:
             abort(500)
@@ -126,9 +126,9 @@ def ajoutSejour():
     message = request.get_json(force=True)
     BaseDD = ManageDatas()
     #sejour, patient, service, dateEntree, dateSortie, probleme, numeroDeLit
-    if "sejour" in message and "patient" in message and "service" in message and "dateEntree" in message and "dateSortie" in message and "probleme" in message and "numeroDeLit" in message:
+    if "patient" in message and "service" in message and "dateEntree" in message and "dateSortie" in message and "probleme" in message and "numeroDeLit" in message:
         try :
-            BaseDD.ajouter_sejour(message["sejour"], message["patient"], message["service"], message["dateEntree"], message["dateSortie"], message["probleme"], message["numeroDeLit"])
+            BaseDD.ajouter_sejour(message["patient"], message["service"], message["dateEntree"], message["dateSortie"], message["probleme"], message["numeroDeLit"])
             return "Ok"
         except:
             abort(500)
