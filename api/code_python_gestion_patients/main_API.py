@@ -122,7 +122,7 @@ def suppressionService():
     else:
         abort(406)
 @main_API.route('/code_python_gestion_patients/AjoutSejour', methods={'POST'})
-def ajoutService():
+def ajoutSejour():
     message = request.get_json(force=True)
     BaseDD = ManageDatas()
     #sejour, patient, service, dateEntree, dateSortie, probleme, numeroDeLit
