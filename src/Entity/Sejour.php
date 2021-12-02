@@ -55,9 +55,15 @@ class Sejour
      */
     private $lit;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Chambre::class, inversedBy="sejours")
+     */
+    private $Chambre;
+
     public function __construct()
     {
         $this->services = new ArrayCollection();
+        $this->Chambre = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,6 +166,30 @@ class Sejour
     public function setLit(?Lit $lit): self
     {
         $this->lit = $lit;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chambre[]
+     */
+    public function getChambre(): Collection
+    {
+        return $this->Chambre;
+    }
+
+    public function addChambre(Chambre $chambre): self
+    {
+        if (!$this->Chambre->contains($chambre)) {
+            $this->Chambre[] = $chambre;
+        }
+
+        return $this;
+    }
+
+    public function removeChambre(Chambre $chambre): self
+    {
+        $this->Chambre->removeElement($chambre);
 
         return $this;
     }

@@ -8,6 +8,13 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
+        '/chambre' => [[['_route' => 'chambre', '_controller' => 'App\\Controller\\ChambreController::index'], null, null, null, false, false, null]],
+        '/infirmier' => [[['_route' => 'infirmier', '_controller' => 'App\\Controller\\InfirmierController::index'], null, null, null, false, false, null]],
+        '/lit' => [[['_route' => 'lit', '_controller' => 'App\\Controller\\LitController::index'], null, null, null, false, false, null]],
+        '/patient' => [[['_route' => 'patient', '_controller' => 'App\\Controller\\PatientController::index'], null, null, null, false, false, null]],
+        '/personne' => [[['_route' => 'personne', '_controller' => 'App\\Controller\\PersonneController::index'], null, null, null, false, false, null]],
+        '/sejour' => [[['_route' => 'sejour', '_controller' => 'App\\Controller\\SejourController::index'], null, null, null, false, false, null]],
+        '/service' => [[['_route' => 'service', '_controller' => 'App\\Controller\\ServiceController::index'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

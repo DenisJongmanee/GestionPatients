@@ -7,15 +7,17 @@ main_API = Flask(__name__)
 def consulter(patient):
     try:
         BaseDD = ManageDatas()
-
+        print("cchiuezghofyiuguy")
         dictionnaire_patient = BaseDD.afficher_donnees_patient(patient)
-
+        
         return jsonify(dictionnaire_patient)
     except:
         abort(500)
 @main_API.route('/code_python_gestion_patients/AjoutPatient', methods={'POST'})
 def ajoutPatient():
+    print("coucou")
     message = request.get_json(force=True)
+
     BaseDD = ManageDatas()
     if "nom" in message and "prenom" in message and "date" in message:
         try :

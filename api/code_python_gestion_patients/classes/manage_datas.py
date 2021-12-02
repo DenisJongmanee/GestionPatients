@@ -8,7 +8,7 @@ class ManageDatas:
 
     def afficher_donnees_patient(self, patient):
         # methode pour afficher les données d'un patient en prenant en compte son id
-        instructionBDD = f"SELECT * FROM patient WHERE idPatient = {patient}"
+        instructionBDD = f"SELECT * FROM patient WHERE id_patient = {patient}"
         self.curseurBDD.execute(instructionBDD)
         dictionnaire_retour = {}
         index = 1
@@ -19,10 +19,10 @@ class ManageDatas:
             dictionnaire_ligne["nom"] = ligne[2]
             dictionnaire_ligne["prenom"] = ligne[3]
             dictionnaire_ligne["age"] = ligne[4]
-            dictionnaire_ligne["sejour"] = ligne[5]
-            dictionnaire_ligne["date_entree"] = ligne[6]
-            dictionnaire_ligne["date_sortie"] = ligne[7]
-            dictionnaire_ligne["probleme"] = ligne[8]
+            #dictionnaire_ligne["sejour"] = ligne[5]
+            #dictionnaire_ligne["date_entree"] = ligne[6]
+            #dictionnaire_ligne["date_sortie"] = ligne[7]
+            #dictionnaire_ligne["probleme"] = ligne[8]
             dictionnaire_retour[index] = dictionnaire_ligne
             index += 1  # incrémente le numero d'intervention
         return dictionnaire_retour

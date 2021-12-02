@@ -13,6 +13,8 @@
       <parameter key="DoctrineBundle">Doctrine\Bundle\DoctrineBundle\DoctrineBundle</parameter>
       <parameter key="DoctrineMigrationsBundle">Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle</parameter>
       <parameter key="MakerBundle">Symfony\Bundle\MakerBundle\MakerBundle</parameter>
+      <parameter key="TwigBundle">Symfony\Bundle\TwigBundle\TwigBundle</parameter>
+      <parameter key="TwigExtraBundle">Twig\Extra\TwigExtraBundle\TwigExtraBundle</parameter>
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
@@ -30,6 +32,14 @@
       <parameter key="MakerBundle" type="collection">
         <parameter key="path">C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients\vendor\symfony\maker-bundle\src</parameter>
         <parameter key="namespace">Symfony\Bundle\MakerBundle</parameter>
+      </parameter>
+      <parameter key="TwigBundle" type="collection">
+        <parameter key="path">C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients\vendor\symfony\twig-bundle</parameter>
+        <parameter key="namespace">Symfony\Bundle\TwigBundle</parameter>
+      </parameter>
+      <parameter key="TwigExtraBundle" type="collection">
+        <parameter key="path">C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients\vendor\twig\extra-bundle</parameter>
+        <parameter key="namespace">Twig\Extra\TwigExtraBundle</parameter>
       </parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
@@ -67,6 +77,8 @@
     </parameter>
     <parameter key="session.save_path">C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients\var\cache\dev/sessions</parameter>
     <parameter key="session.metadata.update_threshold">0</parameter>
+    <parameter key="asset.request_context.base_path">null</parameter>
+    <parameter key="asset.request_context.secure">null</parameter>
     <parameter key="data_collector.templates" type="collection"/>
     <parameter key="debug.error_handler.throw_at">-1</parameter>
     <parameter key="debug.container.dump">C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients\var\cache\dev/App_KernelDevDebugContainer.xml</parameter>
@@ -146,6 +158,10 @@
     <parameter key="doctrine.orm.proxy_namespace">Proxies</parameter>
     <parameter key="doctrine.migrations.preferred_em">null</parameter>
     <parameter key="doctrine.migrations.preferred_connection">null</parameter>
+    <parameter key="twig.form.resources" type="collection">
+      <parameter>form_div_layout.html.twig</parameter>
+    </parameter>
+    <parameter key="twig.default_path">C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients/templates</parameter>
     <parameter key="maker.compatible_check.doctrine.supports_attributes">true</parameter>
     <parameter key="console.command.ids" type="collection"/>
   </parameters>
@@ -262,7 +278,7 @@
     <service id="error_controller" class="Symfony\Component\HttpKernel\Controller\ErrorController" public="true">
       <argument type="service" id="http_kernel"/>
       <argument>error_controller</argument>
-      <argument type="service" id="error_handler.error_renderer.html"/>
+      <argument type="service" id="twig.error_renderer.html"/>
     </service>
     <service id="exception_listener" class="Symfony\Component\HttpKernel\EventListener\ErrorListener">
       <tag name="kernel.event_subscriber"/>
@@ -378,12 +394,24 @@
       <argument type="service" id="service_container"/>
       <argument type="service" id=".service_locator.XXv1IfR"/>
     </service>
+    <service id="locale_aware_listener" class="Symfony\Component\HttpKernel\EventListener\LocaleAwareListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+      <tag name="container.hot_path"/>
+      <argument type="iterator">
+        <argument type="service" id="slugger"/>
+      </argument>
+      <argument type="service" id="request_stack"/>
+    </service>
     <service id="container.env_var_processor" class="Symfony\Component\DependencyInjection\EnvVarProcessor">
       <tag name="container.env_var_processor"/>
       <argument type="service" id="service_container"/>
       <argument type="tagged_iterator" tag="container.env_var_loader"/>
     </service>
-    <service id="slugger" class="stdClass"/>
+    <service id="slugger" class="Symfony\Component\String\Slugger\AsciiSlugger">
+      <tag name="kernel.locale_aware"/>
+      <argument>en</argument>
+    </service>
     <service id="container.getenv" class="Closure">
       <tag name="routing.expression_language_function" function="env"/>
       <argument type="collection">
@@ -1008,6 +1036,55 @@
       <argument>true</argument>
     </service>
     <service id="session.marshaller" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\IdentityMarshaller"/>
+    <service id="assets.packages" class="Symfony\Component\Asset\Packages">
+      <argument type="service" id="assets._default_package"/>
+      <argument type="tagged_iterator" tag="assets.package" index-by="package" default-index-method="getDefaultPackageName" default-priority-method="getDefaultPackagePriority"/>
+    </service>
+    <service id="assets.empty_package" class="Symfony\Component\Asset\Package">
+      <argument type="service" id="assets.empty_version_strategy"/>
+    </service>
+    <service id="assets.context" class="Symfony\Component\Asset\Context\RequestStackContext">
+      <argument type="service" id="request_stack"/>
+      <argument type="service">
+        <service class="string">
+          <factory service="router.request_context" method="getBaseUrl"/>
+        </service>
+      </argument>
+      <argument type="service">
+        <service class="bool">
+          <factory service="router.request_context" method="isSecure"/>
+        </service>
+      </argument>
+    </service>
+    <service id="assets.path_package" class="Symfony\Component\Asset\PathPackage" abstract="true">
+      <argument type="abstract">base path</argument>
+      <argument type="abstract">version strategy</argument>
+      <argument type="service" id="assets.context"/>
+    </service>
+    <service id="assets.url_package" class="Symfony\Component\Asset\UrlPackage" abstract="true">
+      <argument type="abstract">base URLs</argument>
+      <argument type="abstract">version strategy</argument>
+      <argument type="service" id="assets.context"/>
+    </service>
+    <service id="assets.static_version_strategy" class="Symfony\Component\Asset\VersionStrategy\StaticVersionStrategy" abstract="true">
+      <argument type="abstract">version</argument>
+      <argument type="abstract">format</argument>
+    </service>
+    <service id="assets.empty_version_strategy" class="Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy"/>
+    <service id="assets.json_manifest_version_strategy" class="Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy" abstract="true">
+      <argument type="abstract">manifest path</argument>
+      <argument type="service" id="http_client" on-invalid="null"/>
+    </service>
+    <service id="assets.remote_json_manifest_version_strategy" class="Symfony\Component\Asset\VersionStrategy\RemoteJsonManifestVersionStrategy" abstract="true">
+      <argument type="abstract">manifest url</argument>
+      <argument type="service" id="http_client"/>
+      <deprecated package="symfony/framework-bundle" version="5.3">The "%service_id%" service is deprecated, use "assets.json_manifest_version_strategy" instead.</deprecated>
+    </service>
+    <service id="assets._default_package" class="Symfony\Component\Asset\PathPackage">
+      <argument></argument>
+      <argument type="service" id="assets.empty_version_strategy"/>
+      <argument type="service" id="assets.context"/>
+    </service>
     <service id="debug.debug_handlers_listener" class="Symfony\Component\HttpKernel\EventListener\DebugHandlersListener">
       <tag name="kernel.event_subscriber"/>
       <tag name="monolog.logger" channel="php"/>
@@ -1124,6 +1201,22 @@
           <argument>removeCspHeader</argument>
         </argument>
         <argument>-128</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="locale_aware_listener"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>15</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.finish_request</argument>
+        <argument type="collection">
+          <argument type="service_closure" id="locale_aware_listener"/>
+          <argument>onKernelFinishRequest</argument>
+        </argument>
+        <argument>-15</argument>
       </call>
       <call method="addListener">
         <argument>console.error</argument>
@@ -1367,7 +1460,7 @@
       </argument>
     </service>
     <service id="Symfony\Bundle\FrameworkBundle\Controller\TemplateController" class="Symfony\Bundle\FrameworkBundle\Controller\TemplateController" public="true">
-      <argument>null</argument>
+      <argument type="service" id="twig" on-invalid="ignore"/>
     </service>
     <service id="routing.loader.annotation" class="Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader">
       <tag name="routing.loader" priority="-10"/>
@@ -1994,7 +2087,7 @@
       <argument type="service" id="maker.autoloader_util"/>
       <argument type="service" id="maker.file_link_formatter"/>
       <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients</argument>
-      <argument>null</argument>
+      <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients/templates</argument>
     </service>
     <service id="maker.autoloader_finder" class="Symfony\Bundle\MakerBundle\Util\ComposerAutoloaderFinder">
       <argument>App</argument>
@@ -2156,6 +2249,239 @@
       <tag name="maker.command"/>
       <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients</argument>
     </service>
+    <service id="twig" class="Twig\Environment" public="true">
+      <tag name="container.preload" class="Twig\Cache\FilesystemCache"/>
+      <tag name="container.preload" class="Twig\Extension\CoreExtension"/>
+      <tag name="container.preload" class="Twig\Extension\EscaperExtension"/>
+      <tag name="container.preload" class="Twig\Extension\OptimizerExtension"/>
+      <tag name="container.preload" class="Twig\Extension\StagingExtension"/>
+      <tag name="container.preload" class="Twig\ExtensionSet"/>
+      <tag name="container.preload" class="Twig\Template"/>
+      <tag name="container.preload" class="Twig\TemplateWrapper"/>
+      <tag name="container.private" package="symfony/twig-bundle" version="5.2"/>
+      <argument type="service" id="twig.loader.native_filesystem"/>
+      <argument type="collection">
+        <argument key="autoescape">name</argument>
+        <argument key="cache">C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients\var\cache\dev/twig</argument>
+        <argument key="charset">UTF-8</argument>
+        <argument key="debug">true</argument>
+        <argument key="strict_variables">true</argument>
+      </argument>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.profiler"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.trans"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.assets"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.code"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.routing"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.yaml"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.debug.stopwatch"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.httpkernel"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.httpfoundation"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service" id="doctrine.twig.doctrine_extension"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service" id="twig.extension.debug"/>
+      </call>
+      <call method="addGlobal">
+        <argument>app</argument>
+        <argument type="service" id="twig.app_variable"/>
+      </call>
+      <call method="addRuntimeLoader">
+        <argument type="service" id="twig.runtime_loader"/>
+      </call>
+      <call method="registerUndefinedFilterCallback">
+        <argument type="collection">
+          <argument type="service" id="twig.missing_extension_suggestor"/>
+          <argument>suggestFilter</argument>
+        </argument>
+      </call>
+      <call method="registerUndefinedFunctionCallback">
+        <argument type="collection">
+          <argument type="service" id="twig.missing_extension_suggestor"/>
+          <argument>suggestFunction</argument>
+        </argument>
+      </call>
+      <call method="registerUndefinedTokenParserCallback">
+        <argument type="collection">
+          <argument type="service" id="twig.missing_extension_suggestor"/>
+          <argument>suggestTag</argument>
+        </argument>
+      </call>
+      <configurator service="twig.configurator.environment" method="configure"/>
+    </service>
+    <service id="twig.app_variable" class="Symfony\Bridge\Twig\AppVariable">
+      <call method="setEnvironment">
+        <argument>dev</argument>
+      </call>
+      <call method="setDebug">
+        <argument>true</argument>
+      </call>
+      <call method="setRequestStack">
+        <argument type="service" id="request_stack" on-invalid="ignore"/>
+      </call>
+    </service>
+    <service id="twig.template_iterator" class="Symfony\Bundle\TwigBundle\TemplateIterator">
+      <argument type="service" id="kernel"/>
+      <argument type="collection"/>
+      <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients/templates</argument>
+    </service>
+    <service id="twig.template_cache_warmer" class="Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheWarmer">
+      <tag name="kernel.cache_warmer"/>
+      <tag name="container.service_subscriber" id="twig"/>
+      <argument type="service" id=".service_locator.aq4MYft.twig.template_cache_warmer"/>
+      <argument type="service" id="twig.template_iterator"/>
+    </service>
+    <service id="twig.loader.native_filesystem" class="Twig\Loader\FilesystemLoader">
+      <tag name="twig.loader"/>
+      <argument type="collection"/>
+      <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients</argument>
+      <call method="addPath">
+        <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients\vendor\doctrine\doctrine-bundle/Resources/views</argument>
+        <argument>Doctrine</argument>
+      </call>
+      <call method="addPath">
+        <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients\vendor\doctrine\doctrine-bundle/Resources/views</argument>
+        <argument>!Doctrine</argument>
+      </call>
+      <call method="addPath">
+        <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients\vendor\doctrine\doctrine-migrations-bundle/Resources/views</argument>
+        <argument>DoctrineMigrations</argument>
+      </call>
+      <call method="addPath">
+        <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients\vendor\doctrine\doctrine-migrations-bundle/Resources/views</argument>
+        <argument>!DoctrineMigrations</argument>
+      </call>
+      <call method="addPath">
+        <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients/templates</argument>
+      </call>
+    </service>
+    <service id="twig.loader.chain" class="Twig\Loader\ChainLoader"/>
+    <service id="twig.extension.profiler" class="Symfony\Bridge\Twig\Extension\ProfilerExtension">
+      <tag name="twig.extension"/>
+      <argument type="service" id="twig.profile"/>
+      <argument type="service" id="debug.stopwatch" on-invalid="ignore"/>
+    </service>
+    <service id="twig.profile" class="Twig\Profiler\Profile"/>
+    <service id="data_collector.twig" class="Symfony\Bridge\Twig\DataCollector\TwigDataCollector">
+      <tag name="data_collector" template="@WebProfiler/Collector/twig.html.twig" id="twig" priority="257"/>
+      <argument type="service" id="twig.profile"/>
+      <argument type="service" id="twig"/>
+    </service>
+    <service id="twig.extension.trans" class="Symfony\Bridge\Twig\Extension\TranslationExtension">
+      <tag name="twig.extension"/>
+      <argument>null</argument>
+    </service>
+    <service id="twig.extension.assets" class="Symfony\Bridge\Twig\Extension\AssetExtension">
+      <tag name="twig.extension"/>
+      <argument type="service" id="assets.packages"/>
+    </service>
+    <service id="twig.extension.code" class="Symfony\Bridge\Twig\Extension\CodeExtension">
+      <tag name="twig.extension"/>
+      <argument type="service" id="debug.file_link_formatter" on-invalid="ignore"/>
+      <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients</argument>
+      <argument>UTF-8</argument>
+    </service>
+    <service id="twig.extension.routing" class="Symfony\Bridge\Twig\Extension\RoutingExtension">
+      <tag name="twig.extension"/>
+      <argument type="service" id="router.default"/>
+    </service>
+    <service id="twig.extension.yaml" class="Symfony\Bridge\Twig\Extension\YamlExtension">
+      <tag name="twig.extension"/>
+    </service>
+    <service id="twig.extension.debug.stopwatch" class="Symfony\Bridge\Twig\Extension\StopwatchExtension">
+      <tag name="twig.extension"/>
+      <argument type="service" id="debug.stopwatch" on-invalid="ignore"/>
+      <argument>true</argument>
+    </service>
+    <service id="twig.extension.httpkernel" class="Symfony\Bridge\Twig\Extension\HttpKernelExtension">
+      <tag name="twig.extension"/>
+    </service>
+    <service id="twig.runtime.httpkernel" class="Symfony\Bridge\Twig\Extension\HttpKernelRuntime">
+      <tag name="twig.runtime"/>
+      <argument type="service" id="fragment.handler"/>
+      <argument type="service" id="fragment.uri_generator" on-invalid="ignore"/>
+    </service>
+    <service id="twig.extension.httpfoundation" class="Symfony\Bridge\Twig\Extension\HttpFoundationExtension">
+      <tag name="twig.extension"/>
+      <argument type="service" id="url_helper"/>
+    </service>
+    <service id="twig.extension.debug" class="Twig\Extension\DebugExtension">
+      <tag name="twig.extension"/>
+    </service>
+    <service id="twig.extension.weblink" class="Symfony\Bridge\Twig\Extension\WebLinkExtension">
+      <argument type="service" id="request_stack"/>
+    </service>
+    <service id="twig.configurator.environment" class="Symfony\Bundle\TwigBundle\DependencyInjection\Configurator\EnvironmentConfigurator">
+      <argument>F j, Y H:i</argument>
+      <argument>%d days</argument>
+      <argument>null</argument>
+      <argument>0</argument>
+      <argument>.</argument>
+      <argument>,</argument>
+    </service>
+    <service id="twig.runtime_loader" class="Twig\RuntimeLoader\ContainerRuntimeLoader">
+      <argument type="service" id=".service_locator.HJisze0"/>
+    </service>
+    <service id="twig.error_renderer.html" class="Symfony\Bridge\Twig\ErrorRenderer\TwigErrorRenderer">
+      <argument type="service" id="twig"/>
+      <argument type="service" id="error_handler.error_renderer.html"/>
+      <argument type="service">
+        <service class="bool">
+          <argument type="service" id="request_stack"/>
+          <argument>true</argument>
+          <factory class="Symfony\Bridge\Twig\ErrorRenderer\TwigErrorRenderer" method="isDebug"/>
+        </service>
+      </argument>
+    </service>
+    <service id="twig.runtime.serializer" class="Symfony\Bridge\Twig\Extension\SerializerRuntime">
+      <argument type="service" id="serializer"/>
+    </service>
+    <service id="twig.extension.serializer" class="Symfony\Bridge\Twig\Extension\SerializerExtension"/>
+    <service id="twig.command.debug" class="Symfony\Bridge\Twig\Command\DebugCommand">
+      <tag name="console.command"/>
+      <tag name="container.no_preload"/>
+      <argument type="service" id="twig"/>
+      <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients</argument>
+      <argument>%kernel.bundles_metadata%</argument>
+      <argument>C:\Users\bamme\OneDrive\Bureau\Cours EPSI B2\Projet Transversal\Conception\GestionPatients/templates</argument>
+      <argument type="service" id="debug.file_link_formatter" on-invalid="null"/>
+      <call method="setName">
+        <argument>debug:twig</argument>
+      </call>
+      <call method="setDescription">
+        <argument>Show a list of twig functions, filters, globals and tests</argument>
+      </call>
+    </service>
+    <service id="twig.command.lint" class="Symfony\Bundle\TwigBundle\Command\LintCommand">
+      <tag name="console.command"/>
+      <tag name="container.no_preload"/>
+      <argument type="service" id="twig"/>
+      <call method="setName">
+        <argument>lint:twig</argument>
+      </call>
+      <call method="setDescription">
+        <argument>Lint a Twig template and outputs encountered errors</argument>
+      </call>
+    </service>
+    <service id="twig.missing_extension_suggestor" class="Twig\Extra\TwigExtraBundle\MissingExtensionSuggestor"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ChambreController" class="App\Controller\ChambreController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ChambreController" class="App\Controller\ChambreController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\ChambreController" class="App\Controller\ChambreController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -2610,6 +2936,7 @@
         <argument key="request_stack" type="service_closure" id="request_stack" on-invalid="ignore"/>
         <argument key="router" type="service_closure" id="router.default" on-invalid="ignore"/>
         <argument key="session" type="service_closure" id=".session.deprecated" on-invalid="ignore"/>
+        <argument key="twig" type="service_closure" id="twig" on-invalid="ignore"/>
       </argument>
     </service>
     <service id=".service_locator.W9y3dzm.App\Controller\ChambreController" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -2677,6 +3004,18 @@
       <argument>router.cache_warmer</argument>
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.HLwzKIm" method="withContext"/>
+    </service>
+    <service id=".service_locator.aq4MYft" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="twig" type="service_closure" id="twig"/>
+      </argument>
+    </service>
+    <service id=".service_locator.aq4MYft.twig.template_cache_warmer" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="twig.template_cache_warmer"/>
+      <argument>twig.template_cache_warmer</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.aq4MYft" method="withContext"/>
     </service>
     <service id=".service_locator.XXv1IfR" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
@@ -2904,6 +3243,20 @@
       <argument>false</argument>
       <argument type="service_closure" id="console.command.secrets_encrypt_from_local"/>
     </service>
+    <service id=".twig.command.debug.lazy" class="Symfony\Component\Console\Command\LazyCommand">
+      <argument>debug:twig</argument>
+      <argument type="collection"/>
+      <argument>Show a list of twig functions, filters, globals and tests</argument>
+      <argument>false</argument>
+      <argument type="service_closure" id="twig.command.debug"/>
+    </service>
+    <service id=".twig.command.lint.lazy" class="Symfony\Component\Console\Command\LazyCommand">
+      <argument>lint:twig</argument>
+      <argument type="collection"/>
+      <argument>Lint a Twig template and outputs encountered errors</argument>
+      <argument>false</argument>
+      <argument type="service_closure" id="twig.command.lint"/>
+    </service>
     <service id=".maker.auto_command.make_auth.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>make:auth</argument>
       <argument type="collection"/>
@@ -3056,7 +3409,7 @@
     </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
       <tag name="container.no_preload"/>
-      <argument type="service" id=".service_locator.lKpRvp6"/>
+      <argument type="service" id=".service_locator.WY6KMFo"/>
       <argument type="collection">
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
@@ -3113,6 +3466,8 @@
         <argument key="doctrine:migrations:status">doctrine_migrations.status_command</argument>
         <argument key="doctrine:migrations:up-to-date">doctrine_migrations.up_to_date_command</argument>
         <argument key="doctrine:migrations:version">doctrine_migrations.version_command</argument>
+        <argument key="debug:twig">twig.command.debug</argument>
+        <argument key="lint:twig">twig.command.lint</argument>
         <argument key="make:auth">maker.auto_command.make_auth</argument>
         <argument key="make:command">maker.auto_command.make_command</argument>
         <argument key="make:controller">maker.auto_command.make_controller</argument>
@@ -3138,7 +3493,7 @@
         <argument key="make:migration">maker.auto_command.make_migration</argument>
       </argument>
     </service>
-    <service id=".service_locator.lKpRvp6" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.WY6KMFo" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="Doctrine\DBAL\Tools\Console\Command\RunSqlCommand" type="service_closure" id="Doctrine\DBAL\Tools\Console\Command\RunSqlCommand"/>
@@ -3217,6 +3572,14 @@
         <argument key="maker.auto_command.make_user" type="service_closure" id=".maker.auto_command.make_user.lazy"/>
         <argument key="maker.auto_command.make_validator" type="service_closure" id=".maker.auto_command.make_validator.lazy"/>
         <argument key="maker.auto_command.make_voter" type="service_closure" id=".maker.auto_command.make_voter.lazy"/>
+        <argument key="twig.command.debug" type="service_closure" id=".twig.command.debug.lazy"/>
+        <argument key="twig.command.lint" type="service_closure" id=".twig.command.lint.lazy"/>
+      </argument>
+    </service>
+    <service id=".service_locator.HJisze0" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="Symfony\Bridge\Twig\Extension\HttpKernelRuntime" type="service_closure" id="twig.runtime.httpkernel"/>
       </argument>
     </service>
     <service id="Psr\Container\ContainerInterface" alias="service_container">
@@ -3240,8 +3603,8 @@
     <service id="Symfony\Component\DependencyInjection\ReverseContainer" alias="reverse_container"/>
     <service id="Symfony\Component\String\Slugger\SluggerInterface" alias="slugger"/>
     <service id="Symfony\Component\HttpKernel\Fragment\FragmentUriGeneratorInterface" alias="fragment.uri_generator"/>
-    <service id="error_renderer.html" alias="error_handler.error_renderer.html"/>
-    <service id="error_renderer" alias="error_handler.error_renderer.html"/>
+    <service id="error_renderer.html" alias="twig.error_renderer.html"/>
+    <service id="error_renderer" alias="twig.error_renderer.html"/>
     <service id="Psr\EventDispatcher\EventDispatcherInterface" alias="debug.event_dispatcher"/>
     <service id="Psr\Container\ContainerInterface $parameterBag" alias="parameter_bag"/>
     <service id="cache.app_clearer" alias="cache.default_clearer" public="true"/>
@@ -3259,6 +3622,7 @@
     <service id="Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface" alias="session.flash_bag"/>
     <service id="session.storage.factory" alias="session.storage.factory.native"/>
     <service id="session.handler" alias="session.handler.native_file"/>
+    <service id="Symfony\Component\Asset\Packages" alias="assets.packages"/>
     <service id="Symfony\Component\HttpKernel\Debug\FileLinkFormatter" alias="debug.file_link_formatter"/>
     <service id="Symfony\Component\Stopwatch\Stopwatch" alias="debug.stopwatch"/>
     <service id="router" alias="router.default" public="true"/>
@@ -3285,17 +3649,22 @@
     <service id="Doctrine\ORM\EntityManagerInterface $defaultEntityManager" alias="doctrine.orm.default_entity_manager"/>
     <service id="doctrine.orm.default_entity_manager.event_manager" alias="doctrine.dbal.default_connection.event_manager"/>
     <service id="doctrine.migrations.metadata_storage" alias="doctrine.migrations.storage.table_storage"/>
+    <service id="Twig_Environment" alias="twig"/>
+    <service id="Twig\Environment" alias="twig"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.0GV1BZZ" public="true"/>
+    <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
     <service id="argument_resolver.controller_locator" alias=".service_locator.YxNo8ZP"/>
     <service id="session" alias=".session.do-not-use" public="true">
       <deprecated package="symfony/framework-bundle" version="5.3">The "%alias_id%" service and "SessionInterface" alias are deprecated, use "$requestStack-&gt;getSession()" instead.</deprecated>
     </service>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
+    <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
     <service id="controller_resolver" alias="debug.controller_resolver"/>
     <service id="argument_resolver" alias="debug.argument_resolver"/>
     <service id="doctrine.migrations.migrations_factory" alias="doctrine.migrations.container_aware_migrations_factory"/>
+    <service id="twig.error_renderer.html.inner" alias="error_handler.error_renderer.html"/>
     <service id="argument_resolver.request_attribute" alias="debug.argument_resolver.request_attribute"/>
     <service id="argument_resolver.request" alias="debug.argument_resolver.request"/>
     <service id="argument_resolver.session" alias="debug.argument_resolver.session"/>
@@ -3306,6 +3675,6 @@
     <service id="doctrine.orm.default_metadata_driver" alias=".doctrine.orm.default_metadata_driver"/>
     <service id=".service_locator._5g_Wvc" alias=".service_locator.KfwZsne"/>
     <service id=".service_locator.JBAFp66" alias=".service_locator.KfbR3DY"/>
-    <service id=".service_locator.INaR5pD" alias=".service_locator.W9y3dzm"/>
+    <service id=".service_locator.qrpz1ae" alias=".service_locator.W9y3dzm"/>
   </services>
 </container>

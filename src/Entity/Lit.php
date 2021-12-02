@@ -29,9 +29,15 @@ class Lit
      */
     private $sejour;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Chambre::class, mappedBy="Lit")
+     */
+    private $chambres;
+
     public function __construct()
     {
         $this->sejour = new ArrayCollection();
+        $this->chambres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,6 +82,33 @@ class Lit
             if ($sejour->getLit() === $this) {
                 $sejour->setLit(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Chambre[]
+     */
+    public function getChambres(): Collection
+    {
+        return $this->chambres;
+    }
+
+    public function addChambre(Chambre $chambre): self
+    {
+        if (!$this->chambres->contains($chambre)) {
+            $this->chambres[] = $chambre;
+            $chambre->addLit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChambre(Chambre $chambre): self
+    {
+        if ($this->chambres->removeElement($chambre)) {
+            $chambre->removeLit($this);
         }
 
         return $this;
