@@ -24,7 +24,7 @@ class ManageDatas:
             #dictionnaire_ligne["date_sortie"] = ligne[7]
             #dictionnaire_ligne["probleme"] = ligne[8]
             dictionnaire_retour[index] = dictionnaire_ligne
-            index += 1  # incrémente le numero d'intervention
+            index += 1  # incrémente le numero
         return dictionnaire_retour
 
     def ajouter_patient(self, nom, prenom, date):
