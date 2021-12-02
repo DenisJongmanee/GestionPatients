@@ -1,5 +1,5 @@
 import mysql.connector
-from service import Service
+from classes.service import Service
 
 class Manage_service:
     def __init__(self):

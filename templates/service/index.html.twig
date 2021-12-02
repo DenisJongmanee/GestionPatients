@@ -1,26 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ServiceController!{% endblock %}
+{% block title %}Hello ServiceController!
+{% endblock %}
 
 {% block body %}
-<div class="container">
-<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">Id du Service</th>
-				<th scope="col">Nom du service</th>
-				<th scope="col">Zone géographique</th>
-			</tr>
-		</thead>
-		<tbody>
-			{#% for %#}
-			<tr>
-				<th scope="row">Salut</th>
-				<td>Coucou</td>
-				<td>Yo</td>
-			</tr>
-			{#% endfor %#}
-		</tbody>
-	</table>
-</div>	
+	<div class="container">
+		<table class="table table-sm">
+			<thead>
+				<tr>
+					<th scope="col">Id du Service</th>
+					<th scope="col">Nom du service</th>
+					<th scope="col">Zone géographique</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#% for %#}
+				<tr>
+					<th scope="row">Salut</th>
+					<td>Coucou</td>
+					<td>Yo</td>
+				</tr>
+				{#% endfor %#}
+			</tbody>
+		</table>
+	</div>
 {% endblock %}

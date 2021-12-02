@@ -1,5 +1,5 @@
 import mysql.connector
-from patient import Patient
+from classes.patient import Patient
 
 class Manage_patient:
     def __init__(self):
@@ -28,17 +28,7 @@ class Manage_patient:
         # methode pour afficher tous les patients
         instructionBDD = f"SELECT * FROM patient"
         self.curseurBDD.execute(instructionBDD)
-        dictionnaire_retour = {}
-        index = 1
-        # creration variable index = 1 correspond au numero du patient
-        for ligne in self.curseurBDD:
-            dictionnaire_ligne = {}
-            dictionnaire_ligne["patient"] = index
-            dictionnaire_ligne["nom"] = ligne[2]
-            dictionnaire_ligne["prenom"] = ligne[3]
-            dictionnaire_ligne["age"] = ligne[4]
-            dictionnaire_retour[index] = dictionnaire_ligne
-            index += 1  # incrémente le numero
+        dictionnaire_retour = self.curseurBDD.fetchall()
         return dictionnaire_retour
 
     def ajouter_patient(self, patient):

@@ -18,17 +18,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#% for %#}
+				{% for patient in patients %}
 				<tr>
-					<th scope="row">Salut</th>
-					<td>Coucou</td>
-					<td>Yo</td>
-					<td>Bonjour</td>
-					<td>Bonjour</td>
-					<td>Bonjour</td>
-					<td>Bonjour</td>
+					<th scope="row">{{patient.nom}}</th>
+					<td>{{patient.prénom}}</td>
+					<td>{{patient.date}}</td>
+					<td>salut</td>
+					<td>salut</td>
+					<td>salut</td>
+					<td>salut</td>
 				</tr>
-				{#% endfor %#}
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>

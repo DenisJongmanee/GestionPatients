@@ -1,5 +1,5 @@
 import mysql.connector
-from personnel import Personnel
+from classes.personnel import Personnel
 
 class Manage_personnel:
     def __init__(self):

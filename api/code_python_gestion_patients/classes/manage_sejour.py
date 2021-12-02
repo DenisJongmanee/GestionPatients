@@ -1,5 +1,5 @@
 import mysql.connector
-from sejour import Sejour
+from classes.sejour import Sejour
 
 class Manage_sejour:
     def __init__(self):
