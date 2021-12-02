@@ -4,36 +4,36 @@
 {% endblock %}
 
 {% block body %}
-
-	<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">Id Séjour</th>
-				<th scope="col">Nom du patient</th>
-				<th scope="col">Prenom du patient</th>
-				<th scope="col">Date d'entée</th>
-				<th scope="col">Date de sortie</th>
-				<th scope="col">Nom du service</th>
-				<th scope="col">Numéro de chambre</th>
-				<th scope="col">Numéro de lit</th>
-				<th scope="col">Problème</th>
-			</tr>
-		</thead>
-		<tbody>
-			{#% for patient in patients %#}
-			<tr>
-				<th scope="row">{#{ patient.id_patient }#}Salut</th>
-				<td>{#{ patient.nom }#}Coucou</td>
-				<td>{#{ patient.prenom }#}Yo</td>
-				<td>{#{ patient.date_naissance }#}Bonjour</td>
-				<td>Bonjour</td>
-				<td>Bonjour</td>
-				<td>Bonjour</td>
-				<td>Bonjour</td>
-				<td>Bonjour</td>
-			</tr>
-			{#% endfor %#}
-		</tbody>
-	</table>
-
+	<div class="container">
+		<table class="table table-sm">
+			<thead>
+				<tr>
+					<th scope="col">Id Séjour</th>
+					<th scope="col">Nom du patient</th>
+					<th scope="col">Prenom du patient</th>
+					<th scope="col">Date d'entée</th>
+					<th scope="col">Date de sortie</th>
+					<th scope="col">Nom du service</th>
+					<th scope="col">Numéro de chambre</th>
+					<th scope="col">Numéro de lit</th>
+					<th scope="col">Problème</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#% for patient in patients %#}
+				<tr>
+					<th scope="row">{#{ patient.id_patient }#}Salut</th>
+					<td>{#{ patient.nom }#}Coucou</td>
+					<td>{#{ patient.prenom }#}Yo</td>
+					<td>{#{ patient.date_naissance }#}Bonjour</td>
+					<td>Bonjour</td>
+					<td>Bonjour</td>
+					<td>Bonjour</td>
+					<td>Bonjour</td>
+					<td>Bonjour</td>
+				</tr>
+				{#% endfor %#}
+			</tbody>
+		</table>
+	</div>
 {% endblock %}
