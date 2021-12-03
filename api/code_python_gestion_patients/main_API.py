@@ -9,9 +9,13 @@ from classes.service import Service
 from classes.manage_service import Manage_service
 from classes.chambre import Chambre
 from classes.manage_chambre import Manage_chambre
+
 main_API = Flask(__name__)
 
-@main_API.route('/code_python_gestion_patients/Consulter/<int:patient>')
+
+######Routes Patient
+
+@main_API.route('/api/patient/<int:patient>')
 def consulter(patient):
     try:
         BaseDD = Manage_patient()
@@ -21,15 +25,18 @@ def consulter(patient):
     except:
         abort(500)
 
-@main_API.route('/code_python_gestion_patients/ListePatient', methods={'GET'})
+
+@main_API.route('/api/patient', methods={'GET'})
 def listePatient():
     try:
         BaseDD = Manage_patient()
-        dictionnaire_patient = BaseDD.afficher_lite_patient()
+        dictionnaire_patient = BaseDD.afficher_liste_patient()
         return jsonify(dictionnaire_patient)
     except:
         abort(500)
-@main_API.route('/code_python_gestion_patients/AjoutPatient', methods={'POST'})
+        
+        
+@main_API.route('/api/patient', methods={'POST'})
 def ajoutPatient():
     message = request.get_json(force=True)
     BaseDD = Manage_patient()
@@ -42,7 +49,9 @@ def ajoutPatient():
             abort(500)
     else:
         abort(406)
-@main_API.route('/code_python_gestion_patients/ModificationPatient', methods={'POST'})
+        
+        
+@main_API.route('/api/patient', methods={'PUT'})
 def modificationPatient() :
     message = request.get_json(force=True)
     BaseDD = Manage_patient()
@@ -55,7 +64,9 @@ def modificationPatient() :
             abort(500)
     else:
         abort(406)
-# @main_API.route('/code_python_gestion_patients/SuppressionPatient', methods={'POST'})
+        
+        
+# @main_API.route('/api/SuppressionPatient', methods={'DELETE'})
 # def suppressionPatient():
 #     message = request.get_json(force=True)
 #     BaseDD = Manage_patient()
@@ -67,7 +78,21 @@ def modificationPatient() :
 #             abort(500)
 #     else:
 #         abort(406)
-@main_API.route('/code_python_gestion_patients/AjoutPersonnel', methods={'POST'})
+
+
+######Routes Personnel Soignant
+
+@main_API.route('/api/personnel_soignant', methods={'GET'})
+def listePersonnel():
+    try:
+        BaseDD = Manage_personnel()
+        dictionnaire_personnel = BaseDD.afficher_liste_personnel()
+        return jsonify(dictionnaire_personnel)
+    except:
+        abort(500)
+        
+        
+@main_API.route('/api/personnel_soignant', methods={'POST'})
 def ajoutPersonnel():
     message = request.get_json(force=True)
     BaseDD = Manage_personnel()
@@ -80,7 +105,9 @@ def ajoutPersonnel():
             abort(500)
     else:
         abort(406)
-@main_API.route('/code_python_gestion_patients/ModificationPersonnel', methods={'POST'})
+        
+        
+@main_API.route('/api/personnel_soignant', methods={'PUT'})
 def modificationPersonnel() :
     message = request.get_json(force=True)
     BaseDD = Manage_personnel()
@@ -93,7 +120,9 @@ def modificationPersonnel() :
             abort(500)
     else:
         abort(406)
-@main_API.route('/code_python_gestion_patients/SuppressionPersonnel', methods={'POST'})
+        
+        
+#@main_API.route('/api/personnel_soignant', methods={'DELETE'})
 # def suppressionPersonnel():
 #     message = request.get_json(force=True)
 #     BaseDD = Manage_personnel()
@@ -105,7 +134,21 @@ def modificationPersonnel() :
 #             abort(500)
 #     else:
 #         abort(406)
-@main_API.route('/code_python_gestion_patients/AjoutService', methods={'POST'})
+
+
+######Routes Service
+
+@main_API.route('/api/service', methods={'GET'})
+def listeService():
+    try:
+        BaseDD = Manage_service()
+        dictionnaire_service = BaseDD.afficher_liste_service()
+        return jsonify(dictionnaire_service)
+    except:
+        abort(500)
+
+
+@main_API.route('/api/service', methods={'POST'})
 def ajoutService():
     message = request.get_json(force=True)
     BaseDD = Manage_service()
@@ -118,7 +161,9 @@ def ajoutService():
             abort(500)
     else:
         abort(406)
-@main_API.route('/code_python_gestion_patients/ModificationService', methods={'POST'})
+        
+        
+@main_API.route('/api/service', methods={'PUT'})
 def modificationService() :
     message = request.get_json(force=True)
     BaseDD = Manage_service()
@@ -131,7 +176,9 @@ def modificationService() :
             abort(500)
     else:
         abort(406)
-@main_API.route('/code_python_gestion_patients/SuppressionService', methods={'POST'})
+        
+        
+#@main_API.route('/api/service', methods={'DELETE'})
 # def suppressionService():
 #     message = request.get_json(force=True)
 #     BaseDD = Manage_service()
@@ -143,7 +190,12 @@ def modificationService() :
 #             abort(500)
 #     else:
 #         abort(406)
-@main_API.route('/code_python_gestion_patients/AjoutSejour', methods={'POST'})
+
+
+
+######Routes Sejour
+
+@main_API.route('/api/sejour', methods={'POST'})
 def ajoutSejour():
     message = request.get_json(force=True)
     BaseDD = Manage_sejour()
@@ -157,36 +209,26 @@ def ajoutSejour():
             abort(500)
     else:
         abort(406)
-@main_API.route('/code_python_gestion_patients/ListePatient', methods={'GET'})
-def listePersonnel():
-    try:
-        BaseDD = Manage_personnel()
-        dictionnaire_personnel = BaseDD.afficher_lite_personnel()
-        return jsonify(dictionnaire_personnel)
-    except:
-        abort(500)
-@main_API.route('/code_python_gestion_patients/ListePatient', methods={'GET'})
+
+
+@main_API.route('/api/sejour', methods={'GET'})
 def listeSejour():
     try:
         BaseDD = Manage_sejour()
-        dictionnaire_sejour = BaseDD.afficher_lite_sejour()
+        dictionnaire_sejour = BaseDD.afficher_liste_sejour()
         return jsonify(dictionnaire_sejour)
     except:
         abort(500)
-@main_API.route('/code_python_gestion_patients/ListePatient', methods={'GET'})
-def listeService():
-    try:
-        BaseDD = Manage_service()
-        dictionnaire_service = BaseDD.afficher_lite_service()
-        return jsonify(dictionnaire_service)
-    except:
-        abort(500)
 
-@main_API.route('/code_python_gestion_patients/ListeChambre', methods={'GET'})
+
+
+######Routes Chambre
+
+@main_API.route('/api/chambre', methods={'GET'})
 def listeChambre():
     try:
         BaseDD = Manage_chambre()
-        dictionnaire_chambre = BaseDD.afficher_lite_chambre()
+        dictionnaire_chambre = BaseDD.afficher_liste_chambre()
         return jsonify(dictionnaire_chambre)
     except:
         abort(500)
