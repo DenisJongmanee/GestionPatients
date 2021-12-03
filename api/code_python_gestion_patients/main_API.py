@@ -1,14 +1,14 @@
 from flask import Flask, jsonify, request, abort
 from classes.patient import Patient
-from classes.manage_patient import Manage_patient
+from manage.manage_patient import Manage_patient
 from classes.personnel import Personnel
-from classes.manage_personnel import Manage_personnel
+from manage.manage_personnel import Manage_personnel
 from classes.sejour import Sejour
-from classes.manage_sejour import Manage_sejour
+from manage.manage_sejour import Manage_sejour
 from classes.service import Service
-from classes.manage_service import Manage_service
+from manage.manage_service import Manage_service
 from classes.chambre import Chambre
-from classes.manage_chambre import Manage_chambre
+from manage.manage_chambre import Manage_chambre
 
 main_API = Flask(__name__)
 
