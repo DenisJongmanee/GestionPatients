@@ -28,8 +28,13 @@ class Manage_patient:
         # methode pour afficher tous les patients
         instructionBDD = f"SELECT * FROM patient"
         self.curseurBDD.execute(instructionBDD)
-        dictionnaire_retour = self.curseurBDD.fetchall()
-        return dictionnaire_retour
+        resultat = self.curseurBDD.fetchall()
+        
+        retour = []
+        print(resultat)
+        for patient in resultat:
+            retour.append({"id":patient[0], "nom": patient[2], "prenom": patient[3], "date": patient[4]})
+        return retour
 
     def ajouter_patient(self, patient):
         # int id_patient /str nom et prenom/date datenaissance
