@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AjoutSejourController extends AbstractController
 {
-    #[Route('/ajout/sejour', name: 'ajout_sejour')]
+    #[Route('/ajout_sejour', name: 'ajout_sejour')]
     public function index(): Response
     {
         return $this->render('ajout_sejour/index.html.twig', [

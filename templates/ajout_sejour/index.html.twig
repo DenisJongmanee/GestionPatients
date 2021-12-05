@@ -1,20 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AjoutSejourController!{% endblock %}
+{% block title %}Hello AjoutSejourController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<form>
+		<div class="container">
+			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+				<div class="card border-0 shadow rounded-3 my-5">
+					<div class="card-body p-4 p-sm-5">
+						<h5 class="card-title text-center mb-5 fw-light fs-5">Ajout d'un séjour</h5>
+						
+                        <label for="exampleInputPatient">Patient</label>
+						<input type="patient" class="form-control">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                        <button class="btn btn-primary" href="creation_patient">Ajouter un patient</button><br>
+                        <small id="ajouterPatient" class="form-text text-muted">Ajoutez un patient uniquement si celui-ci n'a pas encore été ajouté</small>
+                        
+                        <label for="exampleInputDateEntrée">Date d'entrée</label>
+                        <input type="DateEntrée" class="form-control">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Thibault Balleux/ProjetSymphoHopital/GestionPatients/src/Controller/AjoutSejourController.php'|file_link(0) }}">src/Controller/AjoutSejourController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Thibault Balleux/ProjetSymphoHopital/GestionPatients/templates/ajout_sejour/index.html.twig'|file_link(0) }}">templates/ajout_sejour/index.html.twig</a></code></li>
-    </ul>
-</div>
+                        <label for="exampleInputDateSotie">Date de sortie</label>
+                        <input type="DateSortie" class="form-control">
+
+                        <label for="exampleInputProblème">Problème</label>
+						<input type="Problème" class="form-control" >
+
+                        <label for="exampleInputService">Service</label>
+						<input type="Service" class="form-control" >
+
+                        <label for="exampleInputChambre">Numéro de chambre</label>
+						<input type="Chambre" class="form-control" >
+
+                        <label for="exampleInputLit">Numéro de lit</label>
+						<input type="Lit" class="form-control" >
+        
+						<button type="submit" class="btn btn-primary">Ajouter</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 {% endblock %}
