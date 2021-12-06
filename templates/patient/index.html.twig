@@ -5,6 +5,7 @@
 
 {% block body %}
 	<div class="container">
+	<a class="btn btn-primary" href="creation_patient" role="button">Ajouter un séjour</a>
 		<table class="table table-sm">
 			<thead>
 				<tr>
@@ -15,6 +16,7 @@
 					<th scope="col">Id Séjour</th>
 					<th scope="col">Numéro de chambre</th>
 					<th scope="col">Numéro de lit</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -27,6 +29,7 @@
 					<td>salut</td>
 					<td>salut</td>
 					<td>salut</td>
+					<td><a href="creation_patient">Modifier</a></td>
 				</tr>
 				{% endfor %}
 			</tbody>
