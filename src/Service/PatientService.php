@@ -12,7 +12,7 @@ class PatientService
     public function __construct(HttpClientInterface $httpclient)
     {
         $this->httpclient = $httpclient;
-        $this->url = 'htt://http://127.0.0.1:5000/api/patient';
+        $this->url = 'http://127.0.0.1:5000/api/patient';
     }
 
     public function getApi(string $param = "")
