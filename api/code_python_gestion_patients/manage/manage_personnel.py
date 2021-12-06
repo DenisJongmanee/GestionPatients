@@ -9,26 +9,20 @@ class Manage_personnel:
 
     def afficher_liste_personnel(self):
         # methode pour afficher tous les personnels
-        instructionBDD = f"SELECT * FROM personnel"
+        instructionBDD = "SELECT personnel_soigant.id, nom, prenom, date_naissance, nom_service FROM personnel_soigant INNER JOIN service ON personnel_soigant.id_service=service.id"
         self.curseurBDD.execute(instructionBDD)
-        dictionnaire_retour = {}
-        index = 1
-        # creration variable index = 1 correspond au numero du personnel
-        for ligne in self.curseurBDD:
-            dictionnaire_ligne = {}
-            dictionnaire_ligne["personnel"] = index
-            dictionnaire_ligne["nom"] = ligne[2]
-            dictionnaire_ligne["prenom"] = ligne[3]
-            dictionnaire_ligne["age"] = ligne[4]
-            dictionnaire_retour[index] = dictionnaire_ligne
-            index += 1  # incrémente le numero
-        return dictionnaire_retour
-
-    def ajouter_personnel(self, nom, prenom, date):
+        resultat = self.curseurBDD.fetchall()
+        retour = []
+        for personnel_soignant in resultat:
+            retour.append({"id":personnel_soignant[0], "nom":personnel_soignant[1], "prenom":personnel_soignant[2], "date_naissance":personnel_soignant[3], "service":personnel_soignant[4]})
+        return retour
+    
+    
+    def ajouter_personnel(self, personnel):
         # int id_personnel /str nom et prenom/date datenaissance
         # methode pour ajouter un personnel soignant
-        instructionBDD = f"INSERT INTO PersonnelSoignant (nom, prenom, dateNaissance) " \
-                         f"VALUES ('{nom}', '{prenom}', {date};)"
+        instructionBDD = f"INSERT INTO personnel_soigant (nom, prenom, date_naissance, id_service) " \
+                         f"VALUES ('{personnel.nom}', '{personnel.prenom}', '{personnel.date}', {personnel.service})"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
@@ -39,9 +33,9 @@ class Manage_personnel:
         self.conn.commit()
         #si on veut aller plus loin, on peut garder les données pour les insérer dans une base de donnée dite "archive"
 
-    def modifier_personnel(self, personnel, nom, prenom, date):
+    def modifier_personnel(self, personnel, id_personnel):
         # int id_personnel /str nom et prenom/date datenaissance
         # methode pour modifier un personnel soignant
-        instructionBDD = f"UPDATE PersonnelSoignant set nom = '{nom}', prenom = '{prenom}' date = '{date}' where idPersonnel = {personnel};"
+        instructionBDD = f"UPDATE PersonnelSoignant set nom = '{personnel.nom}', prenom = '{personnel.prenom}', date = '{personnel.date}', id_service = {personnel.service} where id = {id_personnel};"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()

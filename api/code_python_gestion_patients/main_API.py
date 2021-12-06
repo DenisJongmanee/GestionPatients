@@ -15,15 +15,16 @@ main_API = Flask(__name__)
 
 ######Routes Patient
 
-@main_API.route('/api/patient/<int:patient>')
-def consulter(patient):
-    try:
-        BaseDD = Manage_patient()
-        dictionnaire_patient = BaseDD.afficher_donnees_patient(patient)
+
+# @main_API.route('/api/patient/<int:patient>')
+# def consulter(patient):
+#     try:
+#         BaseDD = Manage_patient()
+#         dictionnaire_patient = BaseDD.afficher_donnees_patient(patient)
         
-        return jsonify(dictionnaire_patient)
-    except:
-        abort(500)
+#         return jsonify(dictionnaire_patient)
+#     except:
+#         abort(500)
 
 
 @main_API.route('/api/patient', methods={'GET'})
@@ -55,10 +56,10 @@ def ajoutPatient():
 def modificationPatient() :
     message = request.get_json(force=True)
     BaseDD = Manage_patient()
-    if "patient" in message and "nom" in message and "prenom" in message and "date" in message:
+    if "id_patient" in message and "nom" in message and "prenom" in message and "date" in message:
         patient = Patient(message["nom"], message["prenom"], message["date"])
         try :
-            BaseDD.modifier_patient(patient)
+            BaseDD.modifier_patient(patient, message['id_patient'])
             return "Ok"
         except:
             abort(500)
@@ -96,8 +97,8 @@ def listePersonnel():
 def ajoutPersonnel():
     message = request.get_json(force=True)
     BaseDD = Manage_personnel()
-    if "nom" in message and "prenom" in message and "date" in message:
-        personnel = Personnel(message["nom"], message["prenom"], message["date"])
+    if "nom" in message and "prenom" in message and "date" in message and "service" in message:
+        personnel = Personnel(message["nom"], message["prenom"], message["date"], message["service"])
         try :
             BaseDD.ajouter_personnel(personnel)
             return "Ok"
@@ -111,10 +112,10 @@ def ajoutPersonnel():
 def modificationPersonnel() :
     message = request.get_json(force=True)
     BaseDD = Manage_personnel()
-    if "personnel" in message and "nom" in message and "prenom" in message and "date" in message:
-        personnel = Personnel(message["nom"], message["prenom"], message["date"])
+    if "personnel" in message and "nom" in message and "prenom" in message and "date" in message and "service" in message:
+        personnel = Personnel(message["nom"], message["prenom"], message["date"], message["service"])
         try :
-            BaseDD.modifier_personnel(personnel)
+            BaseDD.modifier_personnel(personnel, message["personne"])
             return "Ok"
         except:
             abort(500)
@@ -148,36 +149,36 @@ def listeService():
         abort(500)
 
 
-@main_API.route('/api/service', methods={'POST'})
-def ajoutService():
-    message = request.get_json(force=True)
-    BaseDD = Manage_service()
-    if "nom" in message and "zone" in message:
-        service = Service(message["nom"], message["zone"])
-        try :
-            BaseDD.ajouter_service(service)
-            return "Ok"
-        except:
-            abort(500)
-    else:
-        abort(406)
+# @main_API.route('/api/service', methods={'POST'})
+# def ajoutService():
+#     message = request.get_json(force=True)
+#     BaseDD = Manage_service()
+#     if "nom" in message and "zone" in message:
+#         service = Service(message["nom"], message["zone"])
+#         try :
+#             BaseDD.ajouter_service(service)
+#             return "Ok"
+#         except:
+#             abort(500)
+#     else:
+#         abort(406)
         
         
-@main_API.route('/api/service', methods={'PUT'})
-def modificationService() :
-    message = request.get_json(force=True)
-    BaseDD = Manage_service()
-    if "service" in message and "nom" in message and "zone" in message:
-        service = Service(message["nom"], message["zone"])
-        try :
-            BaseDD.modifier_service(service)
-            return "Ok"
-        except:
-            abort(500)
-    else:
-        abort(406)
-        
-        
+# @main_API.route('/api/service', methods={'PUT'})
+# def modificationService() :
+#     message = request.get_json(force=True)
+#     BaseDD = Manage_service()
+#     if "service" in message and "nom" in message and "zone" in message:
+#         service = Service(message["nom"], message["zone"])
+#         try :
+#             BaseDD.modifier_service(service)
+#             return "Ok"
+#         except:
+#             abort(500)
+#     else:
+#         abort(406)
+
+
 #@main_API.route('/api/service', methods={'DELETE'})
 # def suppressionService():
 #     message = request.get_json(force=True)
@@ -199,9 +200,9 @@ def modificationService() :
 def ajoutSejour():
     message = request.get_json(force=True)
     BaseDD = Manage_sejour()
-    #sejour, patient, service, dateEntree, dateSortie, probleme, numeroDeLit
-    if "patient" in message and "service" in message and "dateEntree" in message and "dateSortie" in message and "probleme" in message and "numeroDeLit" in message:
-        sejour = Sejour(message["patient"], message["service"], message["dateEntree"], message["dateSortie"], message["probleme"], message["numeroDeLit"])
+    #sejour, patient, service, dateEntree, dateSortie, probleme, idLit, idChambre
+    if "patient" in message and "service" in message and "dateEntree" in message and "dateSortie" in message and "probleme" in message and "idLit" in message and "idChambre" in message:
+        sejour = Sejour(message["patient"], message["service"], message["dateEntree"], message["dateSortie"], message["probleme"], message["idLit"], message["idChambre"])
         try :
             BaseDD.ajouter_sejour(sejour)
             return "Ok"
@@ -232,5 +233,21 @@ def listeChambre():
         return jsonify(dictionnaire_chambre)
     except:
         abort(500)
+        
+# ######Routes Lit
+
+# @main_API.route('/api/lit', methods={'GET'})
+# def listeChambre():
+#     try:
+#         BaseDD = Manage_chambre()
+#         dictionnaire_chambre = BaseDD.afficher_liste_chambre()
+#         return jsonify(dictionnaire_chambre)
+#     except:
+#         abort(500)
+ 
+        
+        
+        
 if __name__ == '__main__':
     main_API.run()
+
