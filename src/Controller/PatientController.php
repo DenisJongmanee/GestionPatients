@@ -21,7 +21,7 @@ class PatientController extends AbstractController
         $patients = $api -> getPatients();
         dump($patients);
         return $this->render('patient/index.html.twig', [
-            'controller_name' => 'PatientController',
+            'PatientController' => $form->createView() ,
             'patients' => $patients
         ]);
     }

@@ -12,7 +12,7 @@ class SejourController extends AbstractController
     public function index(): Response
     {
         return $this->render('sejour/index.html.twig', [
-            'controller_name' => 'SejourController',
+            'SejourController' => $form->createView(),
         ]);
     }
 }

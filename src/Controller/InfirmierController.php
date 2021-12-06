@@ -12,7 +12,7 @@ class InfirmierController extends AbstractController
     public function index(): Response
     {
         return $this->render('infirmier/index.html.twig', [
-            'controller_name' => 'InfirmierController',
+            'InfirmierController' => $form->createView() ,
         ]);
     }
 }

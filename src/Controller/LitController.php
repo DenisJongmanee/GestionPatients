@@ -12,7 +12,7 @@ class LitController extends AbstractController
     public function index(): Response
     {
         return $this->render('lit/index.html.twig', [
-            'controller_name' => 'LitController',
+            'LitController' => $form->createView(),
         ]);
     }
 }
