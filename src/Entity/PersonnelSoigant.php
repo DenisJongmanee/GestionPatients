@@ -37,6 +37,16 @@ class PersonnelSoigant
      */
     private $DateNaissance;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $adresse_mail;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $mot_de_passe;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +96,30 @@ class PersonnelSoigant
     public function setDateNaissance(\DateTimeInterface $DateNaissance): self
     {
         $this->DateNaissance = $DateNaissance;
+
+        return $this;
+    }
+
+    public function getAdresseMail(): ?string
+    {
+        return $this->adresse_mail;
+    }
+
+    public function setAdresseMail(string $adresse_mail): self
+    {
+        $this->adresse_mail = $adresse_mail;
+
+        return $this;
+    }
+
+    public function getMotDePasse(): ?string
+    {
+        return $this->mot_de_passe;
+    }
+
+    public function setMotDePasse(string $mot_de_passe): self
+    {
+        $this->mot_de_passe = $mot_de_passe;
 
         return $this;
     }
