@@ -12,7 +12,7 @@ class ChambreController extends AbstractController
     public function index(): Response
     {
         return $this->render('chambre/index.html.twig', [
-            'controller_name' => 'ChambreController',
+            'ChambreController' => $form->createView(),
         ]);
     }
 }
