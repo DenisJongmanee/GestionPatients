@@ -24,6 +24,7 @@
 
 	</head>
 	<body>
+	{% if app.request.get('_route') != 'connexion' %}
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 			<div class="container-fluid">
 				<ul class="navbar-nav">
@@ -44,10 +45,11 @@
 					</li>
 				</ul>
 				<div class="d-flex">
-					<a class="nav-link" href="">Déconnexion</a>
+					<a class="nav-link" href="connexion">Déconnexion</a>
 				</div>
 			</div>
 		</nav>
+		{% endif %}
 		{% block body %}{% endblock %}
 	</body>
 </html></body></html>
