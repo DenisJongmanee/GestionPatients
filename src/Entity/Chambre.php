@@ -142,4 +142,9 @@ class Chambre
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return "N°" . $this->NumChambre;
+    }
 }
