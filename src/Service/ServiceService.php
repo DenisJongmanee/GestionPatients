@@ -13,7 +13,7 @@ class ServiceService
     public function __construct(HttpClientInterface $httpclient)
     {
         $this->httpclient = $httpclient;
-        $this->url = 'http://127.0.0.1:/api/service';
+        $this->url = 'http://127.0.0.1:5000/api/service';
     }
 
     public function getApi(string $param = "")

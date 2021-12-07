@@ -14,15 +14,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#% for %#}
+				{% for service in services%}
 				<tr>
-					<th scope="row">Salut</th>
-					<td>Coucou</td>
-					<td>Yo</td>
+					<th scope="row">{{service.id_service}}</th>
+					<td>{{service.nom_service}}</td>
+					<td>{{service.zone_geographique}}</td>
 				</tr>
-				{#% endfor %#}
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>
-	{{ form (ServiceController) }}
 {% endblock %}
