@@ -22,20 +22,20 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#% for patient in patients %#}
+				{% for sejour in sejours %}
 				<tr>
-					<th scope="row">{#{ patient.id_patient }#}Salut</th>
-					<td>{#{ patient.nom }#}Coucou</td>
-					<td>{#{ patient.prenom }#}Yo</td>
-					<td>{#{ patient.date_naissance }#}Bonjour</td>
-					<td>Bonjour</td>
-					<td>Bonjour</td>
-					<td>Bonjour</td>
-					<td>Bonjour</td>
-					<td>Bonjour</td>
+					<th scope="row">{{ sejour.id_sejour }}</th>
+					<td>{{sejour.nom}}</td>
+					<td>{{sejour.prenom}}Yo</td>
+					<td>{{sejour.date_entree_sejour}}</td>
+					<td>{{sejour.date_sortie_sejour}}</td>
+					<td>{{sejour.nom_service}}</td>
+					<td>{{sejour.num_chambre}}</td>
+					<td>{{sejour.num_lit}}</td>
+					<td>{{sejour.probleme}}</td>
 					<td><a href="modifier_sejour">Modifier</a></td>
 				</tr>
-				{#% endfor %#}
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>
