@@ -13,7 +13,7 @@ class PersonnelSoignantService
     public function __construct(HttpClientInterface $httpclient)
     {
         $this->httpclient = $httpclient;
-        $this->url = 'http://127.0.0.1:/api/personnel_soignant';
+        $this->url = 'http://127.0.0.1:5000/api/personnel_soignant';
     }
 
     public function getApi(string $param = "")
@@ -28,6 +28,7 @@ class PersonnelSoignantService
     
     public function getPersonnelsSoignant() {
         $response = $this->getApi();
+        
         if ($response->getStatusCode() == 200) {
             return $response->toArray();
         }

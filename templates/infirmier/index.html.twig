@@ -17,18 +17,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#% for %#}
+				{% for infirmier in infirmiers %}
 				<tr>
-					<th scope="row">Salut</th>
-					<td>Coucou</td>
-					<td>Yo</td>
-					<td>Bonjour</td>
-					<td>Bonjour</td>
-					<td>Bonjour</td>
+					<th scope="row">{{infirmier.id}}</th>
+					<td>{{infirmier.nom}}</td>
+					<td>{{infirmier.prenom}}</td>
+					<td>{{infirmier.date_naissance}}</td>
+					<td>{{infirmier.service}}</td>
+					<td>{{infirmier.mail}}</td>
 				</tr>
-				{#% endfor %#}
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>
-	{{ form (InfirmierController)}}
 {% endblock %}
