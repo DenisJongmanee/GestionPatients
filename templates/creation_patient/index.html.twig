@@ -9,17 +9,11 @@
 				<div class="card border-0 shadow rounded-3 my-5">
 					<div class="card-body p-4 p-sm-5">
 						<h5 class="card-title text-center mb-5 fw-light fs-5">Ajout d'un patient</h5>
-						
-                        <label for="exampleInputNomPatient">Nom du Patient</label>
-						<input type="NomPatient" class="form-control">
-                        
-                        <label for="exampleInputPrénomPatient">Prénom du patient</label>
-                        <input type="PrénomPatient" class="form-control">
-
-                        <label for="exampleInputDateNaissance">Date de naissance</label>
-                        <input type="DateNaissance" class="form-control">
         
+						{{ form (CreationPatientController) }}
 						<button type="submit" class="btn btn-primary" href="creation_patient">Ajouter</button>
+
+						
 					</div>
 				</div>
 			</div>
