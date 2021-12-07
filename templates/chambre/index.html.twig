@@ -14,15 +14,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#% for %#}
+				{% for chambre in chambres %}
 				<tr>
-					<th scope="row">Salut</th>
-					<td>Coucou</td>
-					<td>Yo</td>
+					<th scope="row">{{chambre.num_chambre}}</th>
+					<td>{{chambre.nblits}}</td>
+					<td>{{chambre.service}}</td>
 				</tr>
-				{#% endfor %#}
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>
-	{{ form (ChambreController) }}
 {% endblock %}
