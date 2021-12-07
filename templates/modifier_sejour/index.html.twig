@@ -9,29 +9,11 @@
 				<div class="card border-0 shadow rounded-3 my-5">
 					<div class="card-body p-4 p-sm-5">
 						<h5 class="card-title text-center mb-5 fw-light fs-5">Modification du séjour</h5>
+					
+						{{ form (SejourController) }}
 						
-                        <label for="exampleInputPatient">Patient</label>
-						<input type="patient" class="form-control">
-
-                        <label for="exampleInputDateEntrée">Date d'entrée</label>
-                        <input type="DateEntrée" class="form-control">
-
-                        <label for="exampleInputDateSotie">Date de sortie</label>
-                        <input type="DateSortie" class="form-control">
-
-                        <label for="exampleInputProblème">Problème</label>
-						<input type="Problème" class="form-control" >
-
-                        <label for="exampleInputService">Service</label>
-						<input type="Service" class="form-control" >
-
-                        <label for="exampleInputChambre">Numéro de chambre</label>
-						<input type="Chambre" class="form-control" >
-
-                        <label for="exampleInputLit">Numéro de lit</label>
-						<input type="Lit" class="form-control" >
-        
 						<button type="submit" class="btn btn-primary">Modifier</button>
+						
 					</div>
 				</div>
 			</div>
