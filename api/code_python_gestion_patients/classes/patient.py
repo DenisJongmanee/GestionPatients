@@ -3,3 +3,4 @@ class Patient:
         self.nom = nom
         self.prenom = prenom
         self.date = date
+#str nom et prenom/date date naissance, date

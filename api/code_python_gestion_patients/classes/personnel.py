@@ -4,3 +4,4 @@ class Personnel:
         self.prenom = prenom
         self.date = date
         self.service = service
+#str nom, prenom et service/date date naissance, date

@@ -37,7 +37,6 @@ class Manage_patient:
         return retour
 
     def ajouter_patient(self, patient):
-        # int id_patient /str nom et prenom/date datenaissance
         # methode pour ajouter un patient
         instructionBDD = f"INSERT INTO Patient (nom, prenom, dateNaissance) " \
                          f"VALUES ('{patient.nom}', '{patient.prenom}', {patient.date};)"
@@ -52,7 +51,7 @@ class Manage_patient:
         # si on veut aller plus loin, on peut garder les données pour les insérer dans une base de donnée dite "archive"
 
     def modifier_patient(self, patient, id_patient):
-    # int id_patient /str nom et prenom/date datenaissance
+    # int id_patient
     # methode pour modifier un patient en prenant en compte son id
         instructionBDD = f"UPDATE patient set nom = '{patient.nom}', prenom = '{patient.prenom}', date_naissance = '{patient.date}' where id_patient = {id_patient};"
 

@@ -7,3 +7,4 @@ class Sejour:
         self.probleme = probleme
         self.idLit = idLit
         self.idChambre = idChambre
+#str probleme/date date entree et sortie / int patient, servicen idLit et id Chambre

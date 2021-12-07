@@ -19,7 +19,6 @@ class Manage_personnel:
     
     
     def ajouter_personnel(self, personnel):
-        # int id_personnel /str nom et prenom/date datenaissance
         # methode pour ajouter un personnel soignant
         instructionBDD = f"INSERT INTO personnel_soigant (nom, prenom, date_naissance, id_service) " \
                          f"VALUES ('{personnel.nom}', '{personnel.prenom}', '{personnel.date}', {personnel.service})"
@@ -34,7 +33,7 @@ class Manage_personnel:
         #si on veut aller plus loin, on peut garder les données pour les insérer dans une base de donnée dite "archive"
 
     def modifier_personnel(self, personnel, id_personnel):
-        # int id_personnel /str nom et prenom/date datenaissance
+        # int id_personnel
         # methode pour modifier un personnel soignant
         instructionBDD = f"UPDATE PersonnelSoignant set nom = '{personnel.nom}', prenom = '{personnel.prenom}', date = '{personnel.date}', id_service = {personnel.service} where id = {id_personnel};"
         self.curseurBDD.execute(instructionBDD)
