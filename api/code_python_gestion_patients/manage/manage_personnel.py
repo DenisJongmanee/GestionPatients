@@ -9,12 +9,12 @@ class Manage_personnel:
 
     def afficher_liste_personnel(self):
         # methode pour afficher tous les personnels
-        instructionBDD = "SELECT personnel_soigant.id, nom, prenom, date_naissance, nom_service FROM personnel_soigant INNER JOIN service ON personnel_soigant.id_service=service.id"
+        instructionBDD = "SELECT personnel_soigant.id, nom, prenom, date_naissance, nom_service, adresse_mail FROM personnel_soigant INNER JOIN service ON personnel_soigant.id_service=service.id"
         self.curseurBDD.execute(instructionBDD)
         resultat = self.curseurBDD.fetchall()
         retour = []
         for personnel_soignant in resultat:
-            retour.append({"id":personnel_soignant[0], "nom":personnel_soignant[1], "prenom":personnel_soignant[2], "date_naissance":personnel_soignant[3], "service":personnel_soignant[4]})
+            retour.append({"id":personnel_soignant[0], "nom":personnel_soignant[1], "prenom":personnel_soignant[2], "date_naissance":personnel_soignant[3], "service":personnel_soignant[4], "mail":personnel_soignant[5]})
         return retour
     
     

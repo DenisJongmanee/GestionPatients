@@ -43,5 +43,5 @@ class Manage_sejour:
         
         retour = []
         for sejour in resultat:
-            retour.append({"id_sejour":sejour[0], "nom": sejour[2] + " " + sejour[3], "date_entree_sejour": sejour[3], "date_sortie_sejour": sejour[4], "nom_service": sejour[5], "num_chambre":sejour[6], "num_lit":sejour[7], "probleme": sejour[8]})
+            retour.append({"id_sejour":sejour[0], "nom": sejour[1], "prenom": sejour[2], "date_entree_sejour": sejour[3], "date_sortie_sejour": sejour[4], "nom_service": sejour[5], "num_chambre":sejour[6], "num_lit":sejour[7], "probleme": sejour[8]})
         return retour

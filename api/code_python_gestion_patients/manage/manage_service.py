@@ -38,5 +38,5 @@ class Manage_service:
         print(resultat)
         retour = []
         for service in resultat:
-            retour.append({"id_sejour":service[0], "nom_service": service[1], "zone_geographique": service[2]})
+            retour.append({"id_service":service[0], "nom_service": service[1], "zone_geographique": service[2]})
         return retour

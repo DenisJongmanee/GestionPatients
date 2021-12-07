@@ -97,6 +97,7 @@ def listePersonnel():
 def ajoutPersonnel():
     message = request.get_json(force=True)
     BaseDD = Manage_personnel()
+    print("test");
     if "nom" in message and "prenom" in message and "date" in message and "service" in message:
         personnel = Personnel(message["nom"], message["prenom"], message["date"], message["service"])
         try :
