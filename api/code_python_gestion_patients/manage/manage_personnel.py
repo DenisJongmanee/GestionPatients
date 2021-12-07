@@ -25,12 +25,12 @@ class Manage_personnel:
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
-    def supprimer_personnel(self, personnel):
-        # methode pour supprimer un personnel de la bdd en prenant en compte son id
-        instructionBDD = f"DELETE * FROM PersonnelSoignant Where idPersonnel = {personnel}"
-        self.curseurBDD.execute(instructionBDD)
-        self.conn.commit()
-        #si on veut aller plus loin, on peut garder les données pour les insérer dans une base de donnée dite "archive"
+    # def supprimer_personnel(self, personnel):
+    #     # methode pour supprimer un personnel de la bdd en prenant en compte son id
+    #     instructionBDD = f"DELETE * FROM PersonnelSoignant Where idPersonnel = {personnel}"
+    #     self.curseurBDD.execute(instructionBDD)
+    #     self.conn.commit()
+    #     #si on veut aller plus loin, on peut garder les données pour les insérer dans une base de donnée dite "archive"
 
     def modifier_personnel(self, personnel, id_personnel):
         # int id_personnel

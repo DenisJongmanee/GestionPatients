@@ -7,22 +7,22 @@ class Manage_patient:
         # connexion à la base de donnée
         self.curseurBDD = self.conn.cursor()
 
-    def afficher_donnees_patient(self, patient):
-        # methode pour afficher les données d'un patient en prenant en compte son id
-        instructionBDD = f"SELECT * FROM patient INNER JOIN WHERE id_patient = {patient}"
-        self.curseurBDD.execute(instructionBDD)
-        dictionnaire_retour = {}
-        index = 1
-        # creration variable index = 1 correspond au numero du patient
-        for ligne in self.curseurBDD:
-            dictionnaire_ligne = {}
-            dictionnaire_ligne["patient"] = index
-            dictionnaire_ligne["nom"] = ligne[2]
-            dictionnaire_ligne["prenom"] = ligne[3]
-            dictionnaire_ligne["age"] = ligne[4]
-            dictionnaire_retour[index] = dictionnaire_ligne
-            index += 1  # incrémente le numero
-        return dictionnaire_retour
+    # def afficher_donnees_patient(self, patient):
+    #     # methode pour afficher les données d'un patient en prenant en compte son id
+    #     instructionBDD = f"SELECT * FROM patient INNER JOIN WHERE id_patient = {patient}"
+    #     self.curseurBDD.execute(instructionBDD)
+    #     dictionnaire_retour = {}
+    #     index = 1
+    #     # creration variable index = 1 correspond au numero du patient
+    #     for ligne in self.curseurBDD:
+    #         dictionnaire_ligne = {}
+    #         dictionnaire_ligne["patient"] = index
+    #         dictionnaire_ligne["nom"] = ligne[2]
+    #         dictionnaire_ligne["prenom"] = ligne[3]
+    #         dictionnaire_ligne["age"] = ligne[4]
+    #         dictionnaire_retour[index] = dictionnaire_ligne
+    #         index += 1  # incrémente le numero
+    #     return dictionnaire_retour
 
     def afficher_liste_patient(self):
         # methode pour afficher tous les patients
@@ -43,12 +43,12 @@ class Manage_patient:
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
-    def supprimer_patient(self, patient):
-        # methode pour supprimer un patient de la bdd avec en argument l'id du patient
-        instructionBDD = f"DELETE * FROM patient Where idPatient = {patient}"
-        self.curseurBDD.execute(instructionBDD)
-        self.conn.commit()
-        # si on veut aller plus loin, on peut garder les données pour les insérer dans une base de donnée dite "archive"
+    # def supprimer_patient(self, patient):
+    #     # methode pour supprimer un patient de la bdd avec en argument l'id du patient
+    #     instructionBDD = f"DELETE * FROM patient Where idPatient = {patient}"
+    #     self.curseurBDD.execute(instructionBDD)
+    #     self.conn.commit()
+    #     # si on veut aller plus loin, on peut garder les données pour les insérer dans une base de donnée dite "archive"
 
     def modifier_patient(self, patient, id_patient):
     # int id_patient
