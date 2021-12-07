@@ -19,7 +19,6 @@ class PatientController extends AbstractController
     public function index(PatientService $api): Response
     {
         $patients = $api -> getPatients();
-        dump($patients);
         return $this->render('patient/index.html.twig', [
             'patients' => $patients
         ]);

@@ -26,14 +26,13 @@
 					<td>{{patient.nom}}</td>
 					<td>{{patient.prenom}}</td>
 					<td>{{patient.date}}</td>
-					<td>salut</td>
-					<td>salut</td>
-					<td>salut</td>
-					<td><a href="modifier_patient">Modifier</a></td>
+					<td>{{patient.id_sejour}}</td>
+					<td>{{patient.num_chambre}}</td>
+					<td>{{patient.num_lit}}</td>
+					<td><a href="modifier_patient	">Modifier</a></td>
 				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
 	</div>
-	{{ form (PatientController) }}
 {% endblock %}
