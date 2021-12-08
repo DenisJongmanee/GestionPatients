@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ConnexionController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card border-0 shadow rounded-3 my-5">
+          <div class="card-body p-4 p-sm-5">
+            <h5 class="card-title text-center mb-5 fw-light fs-5">Connexion</h5>
+            <form action="{{ path('security_register1') }}"method="POST">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" name="nom" placeholder="name@example.com">
+                <label for="floatingInput">Nom</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" name="prenom" placeholder="name@example.com">
+                <label for="floatingInput">Prenom</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="floatingInput" name="date" placeholder="name@example.com">
+                <label for="floatingInput">Date de naissance</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="int" class="form-control" id="floatingInput" name="service" placeholder="name@example.com">
+                <label for="floatingInput">Service</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingPassword" name="email" placeholder="Password">
+                <label  for="floatingPassword">Adresse mail</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="floatingInput" name="password" placeholder="name@example.com">
+                <label for="floatingInput">Mot de passe</label>
+              </div>
+              <div class="d-grid">
+                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Inscription</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

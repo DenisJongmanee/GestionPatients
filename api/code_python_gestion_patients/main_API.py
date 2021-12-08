@@ -12,6 +12,36 @@ from manage.manage_chambre import Manage_chambre
 
 main_API = Flask(__name__)
 
+######Routes User
+
+
+@main_API.route('/api/user/<email>', methods={'GET'})
+def consulter(email):
+    try:
+
+        BaseDD = Manage_personnel()
+        user = BaseDD.get_user(email)
+        
+        return jsonify(user)
+    except:
+        abort(500)
+        
+@main_API.route('/api/user', methods={'POST'})
+def inscription():
+    message = request.get_json(force=True)
+    BaseDD = Manage_personnel()
+    if "nom" in message and "prenom" in message and "date" in message and "service" in message and "email" in message and "password" in message :
+        personnel = Personnel(message["nom"], message["prenom"], message["date"], message["service"], message["email"], message["password"])
+        try :
+            BaseDD.ajouter_personnel(personnel)
+            return "Ok"
+        except:
+            abort(500)
+    else:
+        abort(406)
+
+
+
 
 ######Routes Patient
 

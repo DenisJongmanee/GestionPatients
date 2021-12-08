@@ -20,8 +20,8 @@ class Manage_personnel:
     
     def ajouter_personnel(self, personnel):
         # methode pour ajouter un personnel soignant
-        instructionBDD = f"INSERT INTO personnel_soigant (nom, prenom, date_naissance, id_service) " \
-                         f"VALUES ('{personnel.nom}', '{personnel.prenom}', '{personnel.date}', {personnel.service})"
+        instructionBDD = f"INSERT INTO personnel_soigant (nom, prenom, date_naissance, id_service, adresse_mail, mot_de_passe) " \
+                         f"VALUES ('{personnel.nom}', '{personnel.prenom}', '{personnel.date}', {personnel.service}, '{personnel.email}', '{personnel.password}')"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
 
@@ -38,3 +38,12 @@ class Manage_personnel:
         instructionBDD = f"UPDATE PersonnelSoignant set nom = '{personnel.nom}', prenom = '{personnel.prenom}', date = '{personnel.date}', id_service = {personnel.service} where id = {id_personnel};"
         self.curseurBDD.execute(instructionBDD)
         self.conn.commit()
+        
+    def get_user(self, email):
+        instructionBDD = f"SELECT adresse_mail, mot_de_passe FROM personnel_soigant WHERE adresse_mail= '{email}'"
+        self.curseurBDD.execute(instructionBDD)
+        resultat = self.curseurBDD.fetchall()
+        if len(resultat) == 0:
+            return {}
+        else:
+            return {'email': resultat[0][0], 'password': resultat[0][1]}

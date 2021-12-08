@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=PersonnelSoigantRepository::class)
  */
-class PersonnelSoignant
+class PersonnelSoignant 
 {
     /**
      * @ORM\Id
@@ -36,6 +36,16 @@ class PersonnelSoignant
      * @ORM\Column(type="datetime")
      */
     private $DateNaissance;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
 
     public function getId(): ?int
     {
@@ -86,6 +96,30 @@ class PersonnelSoignant
     public function setDateNaissance(\DateTimeInterface $DateNaissance): self
     {
         $this->DateNaissance = $DateNaissance;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
 
         return $this;
     }
