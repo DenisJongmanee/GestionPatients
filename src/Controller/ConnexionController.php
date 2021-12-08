@@ -24,6 +24,7 @@ class ConnexionController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(): Response
     {
+        return $this->redirectToRoute('sejour');
         return $this->render('connexion/home.html.twig', [
             'controller_name' => 'ConnexionController',
         ]);
