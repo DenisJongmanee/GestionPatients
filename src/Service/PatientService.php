@@ -35,23 +35,23 @@ class PatientService
 
     public function getPatient(string $id) {
         $response = $this->getApi($id);
-
+        
         if ($response->getStatusCode() == 200) {
             return $response->toArray();
         }
     }
    
 
-    public function postPatient(string $patient)
+    public function postPatient($patient)
     {
-        return $this->httpclient->request('POST', 'http://127.0.0.1:5000/api/patient/', [
+        return $this->httpclient->request('POST', $this->url, [
             'json' => $patient
         ]);
     }
 
-    public function putPatient(string $patient)
+    public function putPatient($patient)
     {
-        return $this->httpclient->request('PUT', '//127.0.0.1:/api/patient/', [
+        return $this->httpclient->request('PUT', $this->url, [
             'json' => $patient
         ]);
     }

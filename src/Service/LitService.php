@@ -13,7 +13,7 @@ class LitService
     public function __construct(HttpClientInterface $httpclient)
     {
         $this->httpclient = $httpclient;
-        $this->url = 'http://127.0.0.1:/api/lit';
+        $this->url = 'http://127.0.0.1:5000/api/lit';
     }
 
     public function getApi(string $param = "")

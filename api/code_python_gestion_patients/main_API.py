@@ -9,6 +9,7 @@ from classes.service import Service
 from manage.manage_service import Manage_service
 from classes.chambre import Chambre
 from manage.manage_chambre import Manage_chambre
+from manage.manage_lit import Manage_lit
 
 main_API = Flask(__name__)
 
@@ -40,21 +41,17 @@ def inscription():
     else:
         abort(406)
 
-
-
-
 ######Routes Patient
 
-
-# @main_API.route('/api/patient/<int:patient>')
-# def consulter(patient):
-#     try:
-#         BaseDD = Manage_patient()
-#         dictionnaire_patient = BaseDD.afficher_donnees_patient(patient)
+@main_API.route('/api/patient/<patient>', methods={'GET'})
+def getPatient(patient):
+     try:
+         BaseDD = Manage_patient()
+         dictionnaire_patient = BaseDD.afficher_donnees_patient(patient)
         
-#         return jsonify(dictionnaire_patient)
-#     except:
-#         abort(500)
+         return jsonify(dictionnaire_patient)
+     except:
+         abort(500)
 
 
 @main_API.route('/api/patient', methods={'GET'})
@@ -86,10 +83,10 @@ def ajoutPatient():
 def modificationPatient() :
     message = request.get_json(force=True)
     BaseDD = Manage_patient()
-    if "id_patient" in message and "nom" in message and "prenom" in message and "date" in message:
+    if "id" in message and "nom" in message and "prenom" in message and "date" in message:
         patient = Patient(message["nom"], message["prenom"], message["date"])
         try :
-            BaseDD.modifier_patient(patient, message['id_patient'])
+            BaseDD.modifier_patient(patient, message['id'])
             return "Ok"
         except:
             abort(500)
@@ -252,6 +249,30 @@ def listeSejour():
     except:
         abort(500)
 
+@main_API.route('/api/sejour/<sejour>', methods={'GET'})
+def getSejour(sejour):
+     try:
+         BaseDD = Manage_sejour()
+         dictionnaire_patient = BaseDD.infoSejour(sejour)
+        
+         return jsonify(dictionnaire_patient)
+     except:
+         abort(500)
+
+        
+@main_API.route('/api/sejour', methods={'PUT'})
+def modificationSejour() :
+    message = request.get_json(force=True)
+    BaseDD = Manage_sejour()
+    if "service" in message and "dateEntree" in message and "dateSortie" in message and "probleme" in message and "idLit" in message and "idChambre" in message and "id" in message:
+        sejour = Sejour("", message["service"], message["dateEntree"], message["dateSortie"], message["probleme"], message["idLit"], message["idChambre"])
+        try :
+            BaseDD.modif_sejour(sejour, message['id'])
+            return "Ok"
+        except:
+            abort(500)
+    else:
+        abort(406)
 
 
 ######Routes Chambre
@@ -267,14 +288,14 @@ def listeChambre():
         
 # ######Routes Lit
 
-# @main_API.route('/api/lit', methods={'GET'})
-# def listeChambre():
-#     try:
-#         BaseDD = Manage_chambre()
-#         dictionnaire_chambre = BaseDD.afficher_liste_chambre()
-#         return jsonify(dictionnaire_chambre)
-#     except:
-#         abort(500)
+@main_API.route('/api/lit', methods={'GET'})
+def listeLit():
+    try:
+        BaseDD = Manage_lit()
+        dictionnaire_chambre = BaseDD.afficher_liste_lit()
+        return jsonify(dictionnaire_chambre)
+    except:
+        abort(500)
  
         
         

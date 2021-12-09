@@ -5,7 +5,7 @@
 
 {% block body %}
 	<div class="container">
-	<a class="btn btn-primary" href="creation_patient" role="button">Ajouter un patient</a>
+	<a class="btn btn-primary" href="{{path('ajout_patient')}}" role="button">Ajouter un patient</a>
 		<table class="table table-sm">
 			<thead>
 				<tr>
@@ -29,7 +29,7 @@
 					<td>{{patient.id_sejour}}</td>
 					<td>{{patient.num_chambre}}</td>
 					<td>{{patient.num_lit}}</td>
-					<td><a href="modifier_patient">Modifier</a></td>
+					<td><a href="{{ path('modifier_patient', {id: patient.id }) }}">Modifier</a></td>
 				</tr>
 				{% endfor %}
 			</tbody>

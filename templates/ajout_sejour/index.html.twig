@@ -13,10 +13,13 @@
 					
                         <a class="btn btn-primary" href="creation_patient" role="button">Ajouter un patient</a><br>
                         <small id="ajouterPatient" class="form-text text-muted">Ajoutez un patient uniquement si celui-ci n'a pas encore été ajouté</small>
-
-						{{ form (SejourController) }}
 						
-						<button type="submit" class="btn btn-primary">Ajouter</button>
+
+					
+						{{ form(formSejour, {'method':'POST'}) }}
+
+
+						
 						
 					</div>
 				</div>

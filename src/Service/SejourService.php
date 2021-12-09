@@ -34,12 +34,32 @@ class SejourService
         }
     }
 
-    public function getSejour(string $id) {
+    public function getSejour($id) {
         $response = $this->getApi($id);
 
         if ($response->getStatusCode() == 200) {
             return $response->toArray();
         }
+    }
+    
+    public function postSejour($sejour) {
+        $this->httpclient->request(
+            'POST',
+            $this->url,
+            [
+                'json' => $sejour
+            ]
+        );
+    }
+
+    public function putSejour($sejour) {
+        $this->httpclient->request(
+            'PUT',
+            $this->url,
+            [
+                'json' => $sejour
+            ]
+        );
     }
 
 
