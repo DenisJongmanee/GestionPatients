@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AjoutSejourController!
+{% block title %}Séjour
 {% endblock %}
 
 {% block body %}
@@ -11,7 +11,7 @@
 					<div class="card-body p-4 p-sm-5">
 						<h5 class="card-title text-center mb-5 fw-light fs-5">Ajout d'un séjour</h5>
 					
-                        <a class="btn btn-primary" href="creation_patient" role="button">Ajouter un patient</a><br>
+                        <a class="btn btn-primary" href="{{path('ajout_patient')}}" role="button">Ajouter un patient</a><br>
                         <small id="ajouterPatient" class="form-text text-muted">Ajoutez un patient uniquement si celui-ci n'a pas encore été ajouté</small>
 						
 

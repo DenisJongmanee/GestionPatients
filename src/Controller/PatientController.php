@@ -59,7 +59,6 @@ class PatientController extends AbstractController
         
         if ($patient = $request->get('patient')) 
         { 
-            $patient["date"] = $patient["date"]["year"] . "-" . $patient["date"]["month"] . "-" . $patient["date"]["day"];
             $api->postPatient($patient);
             return $this->redirectToRoute('patient');
         }
