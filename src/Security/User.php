@@ -16,10 +16,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
-    public function __construct($email, $password)
+    public function __construct($email, $password, $roles)
     {
         $this->email=$email;
         $this->password = $password;
+        $this->roles = $roles;
     }
 
 

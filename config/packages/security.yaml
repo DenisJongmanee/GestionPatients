@@ -47,4 +47,5 @@ security:
          - { path: ^/service, roles: ROLE_USER }
          - { path: ^/chambre, roles: ROLE_USER }
          - { path: ^/sejour, roles: ROLE_USER }
+         - { path: ^/inscription, roles: ROLE_ADMIN}
 

@@ -36,7 +36,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         // method in your User class.
         $api = new UserService($this->client);
         $userData = $api->getUser($identifier);
-        return new User($userData['email'], $userData['password']);
+        return new User($userData['email'], $userData['password'], $userData['roles']);
     }
 
     /**
