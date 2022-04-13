@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\PersonnelSoigant;
+
 use App\Service\UserService;
 use App\Security\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,7 +52,7 @@ class ConnexionController extends AbstractController
         $personnel['password'] = $request->get('password');
         
         dump($personnel['nom']);
-        $user = new User($personnel['email'], $personnel['password']);
+        $user = new User($personnel['email'], $personnel['password'], $personnel['roles']);
 
         $hash = $hasher->hashPassword($user, $user->getPassword());
         $personnel['password'] = $hash;
