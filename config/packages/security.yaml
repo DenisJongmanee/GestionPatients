@@ -10,10 +10,7 @@ security:
 
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        in_database:
-            entity:
-                class: App\Entity\PersonnelSoignant
-                property: email
+
         # used to reload user from session & other features (e.g. switch_user)
         api:
             id: App\Security\UserProvider
