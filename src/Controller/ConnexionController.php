@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Service\UserService;
 use App\Security\User;
+use App\Service\ServiceService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,10 +33,13 @@ class ConnexionController extends AbstractController
 
 
     #[Route('/inscription', name: 'security_register')]
-    public function register(Request $request, UserService $service, UserPasswordHasherInterface $hasher): Response
+    public function register(Request $request, ServiceService $apiService, UserService $service, UserPasswordHasherInterface $hasher): Response
     {
+        $services = $apiService->getServices();
+
         return $this->render('inscription/index.html.twig', [
             'controller_name' => 'ConnexionController',
+            'services' => $services
         ]);
     }
 

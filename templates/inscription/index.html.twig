@@ -23,7 +23,11 @@
                 <label for="floatingInput">Date de naissance</label>
               </div>
               <div class="form-floating mb-3">
-                <input type="int" class="form-control" id="floatingInput" name="service" placeholder="name@example.com">
+                <select class="form-control" id="floatingInput" name="service">
+                  {% for service in services %}
+                    <option value="{{service.id_service}}">{{service.nom_service}}</option>
+                  {% endfor %}
+                </select>
                 <label for="floatingInput">Service</label>
               </div>
               <div class="form-floating mb-3">
