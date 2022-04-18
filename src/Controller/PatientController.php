@@ -22,7 +22,7 @@ class PatientController extends AbstractController
     #[Route('/patient', name: 'patient')]
     public function index(PatientService $api): Response
     {
-        $patients = $api -> getPatients();
+        $patients = $api -> getPatients_sejour();
 
         return $this->render('patient/index.html.twig', [
             'patients' => $patients

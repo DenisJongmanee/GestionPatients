@@ -55,4 +55,15 @@ class PatientService
             'json' => $patient
         ]);
     }
+
+    public function getPatients_sejour() 
+    {
+        $response = $this->httpclient->request(
+            'GET',
+            'http://127.0.0.1:5000/api/patient_sejour'
+        );
+        if ($response->getStatusCode() == 200) {
+            return $response->toArray();
+        }
+    }
 }

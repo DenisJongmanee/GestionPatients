@@ -54,7 +54,7 @@ class SejourType extends AbstractType
         dump($patients);
         $choicesPatient = [];
         foreach ($patients as $patient) {
-            $choicesPatient[$patient["num_patient"]] = $patient["id"];
+            $choicesPatient[$patient["nom"] . " " . $patient["prenom"]] = $patient["id"];
         }
     
 
