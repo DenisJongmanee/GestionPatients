@@ -60,8 +60,8 @@ class SejourType extends AbstractType
 
         $builder
             ->add('patient', ChoiceType::class, [ 'label'=> "Patient", 'choices' => $choicesPatient, 'attr' => ['class' => 'form-control', 'placeholder' => 'Patient']])
-            ->add('dateEntree', DateTimeType::class, ['label'=> "Date d'entreé du séjour", 'attr' => ['class' => 'form-control', 'placeholder' => 'Date entrée']])
-            ->add('dateSortie', DateTimeType:: class, ['label'=> "Date de sortie du séjour",'attr' => ['class' => 'form-control', 'placeholder' => 'Date sortie']])
+            ->add('dateEntree', DateTimeType::class, ['label'=> "Date d'entreé du séjour", 'widget' => 'single_text', 'html5' => false, 'attr' => ['class' => 'form-control datetimepicker', 'placeholder' => 'Date entrée']])
+            ->add('dateSortie', DateTimeType:: class, ['label'=> "Date de sortie du séjour", 'widget' => 'single_text', 'html5' => false, 'attr' => ['class' => 'form-control datetimepicker', 'placeholder' => 'Date sortie']])
             ->add('probleme', TextareaType::class, ['label'=> "Problème observé",'attr' => ['class' => 'form-control', 'placeholder' => 'Problème']])
             
             ->add('service', ChoiceType::class, [ 'choices'=> $choicesService, 'attr' => ['class' => 'form-control', 'placeholder' => 'Service']])
