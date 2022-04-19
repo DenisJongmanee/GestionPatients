@@ -24,7 +24,14 @@ class SejourController extends AbstractController
     {
 
         $sejours = $api->getSejours();
-        
+        for($i = 0; $i<count($sejours); $i++) {
+            $date = new DateTime($sejours[$i]['date_entree_sejour']);
+            $sejours[$i]['date_entree_sejour'] = $date->format('d/m/Y à H:i');
+            
+            $date = new DateTime($sejours[$i]['date_sortie_sejour']);
+            $sejours[$i]['date_sortie_sejour'] = $date->format('d/m/Y à H:i');
+        }
+        dump($sejours);
         return $this->render('sejour/index.html.twig', [
             "sejours" => $sejours
         ]);
