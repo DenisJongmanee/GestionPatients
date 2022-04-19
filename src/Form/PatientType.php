@@ -18,7 +18,7 @@ class PatientType extends AbstractType
         $builder
             ->add('nom', TextType::class, [ 'label'=> 'Nom', 'attr' => ['class' => 'form-control', 'placeholder' => 'Nom']])
             ->add('prenom',TextType::class, [ 'label'=> 'Prénom', 'attr' => ['class' => 'form-control', 'placeholder' => 'Prenom']])
-            ->add('date', DateType::class, ['label'=> 'Date de naissance', 'format' => 'yyyy-MM-dd', 'widget' => 'single_text', 'html5'=>false, 'attr' => ['class' => 'form-control', 'placeholder' => 'Date de naissance']])
+            ->add('date', DateType::class, ['label'=> 'Date de naissance', 'widget' => 'single_text', 'html5'=>false, 'attr' => ['class' => 'form-control js-datepicker', 'placeholder' => 'Date de naissance']])
         ;
     }
 
