@@ -29,19 +29,19 @@
 			<div class="container-fluid">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link active" href="{{path('sejour')}}">Séjour</a>
+						<a class="nav-link nav-item{% if (app.request.pathInfo == path('sejour')) %} active{% endif %}" href="{{path('sejour')}}">Séjour</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{path('service')}}">Service</a>
+						<a class="nav-link nav-item{% if (app.request.pathInfo == path('service')) %} active{% endif %}" href="{{path('service')}}">Service</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{path('infirmier')}}">Infirmier</a>
+						<a class="nav-link nav-item{% if (app.request.pathInfo == path('infirmier')) %} active{% endif %}" href="{{path('infirmier')}}">Infirmier</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{path('patient')}}">Patient</a>
+						<a class="nav-link nav-item{% if (app.request.pathInfo == path('patient')) %} active{% endif %}" href="{{path('patient')}}">Patient</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{path('chambre')}}">Chambre</a>
+						<a class="nav-link nav-item{% if (app.request.pathInfo == path('chambre')) %} active{% endif %}" href="{{path('chambre')}}">Chambre</a>
 					</li>
 				</ul>
 				<div class="d-flex">
