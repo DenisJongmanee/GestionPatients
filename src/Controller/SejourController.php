@@ -46,11 +46,7 @@ class SejourController extends AbstractController
         $form->handleRequest($request);
         
         if ($sejour = $request->get('sejour')) 
-        { 
-            $sejour["dateEntree"] = $sejour["dateEntree"]["date"]["year"] . "-" . $sejour["dateEntree"]["date"]["month"] . "-" . $sejour["dateEntree"]["date"]["day"] . " " . $sejour["dateEntree"]["time"]["hour"] . ":" . $sejour["dateEntree"]["time"]["minute"] . ":00";
-            $sejour["dateSortie"] = $sejour["dateSortie"]["date"]["year"] . "-" . $sejour["dateSortie"]["date"]["month"] . "-" . $sejour["dateSortie"]["date"]["day"] . " " . $sejour["dateSortie"]["time"]["hour"] . ":" . $sejour["dateSortie"]["time"]["minute"] . ":00";
-        
-
+        {
             $api->postSejour($sejour);
             return $this->redirectToRoute('sejour');
         }

@@ -24,6 +24,11 @@ class PatientController extends AbstractController
     {
         $patients = $api -> getPatients_sejour();
 
+        for($i = 0; $i<count($patients); $i++) {
+            $date = new DateTime($patients[$i]['date']);
+            $patients[$i]['date'] = $date->format('d/m/Y');
+        }
+        dump($patients);
         return $this->render('patient/index.html.twig', [
             'patients' => $patients
         ]);
@@ -59,8 +64,8 @@ class PatientController extends AbstractController
         
         if ($patient = $request->get('patient')) 
         {
-            $patient['date'] = $patient['date']['year'] . "-" . $patient['date']['month'] . "-" . $patient['date']['day'];
-            dump($patient['date']);
+            $dateFormat = explode('-', $patient['date']);   
+            $patient['date'] = $dateFormat[2] . '-' . $dateFormat[1] . '-' . $dateFormat[0];
             $api->postPatient($patient);
             return $this->redirectToRoute('patient');
         }

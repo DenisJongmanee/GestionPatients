@@ -29,7 +29,12 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
     <script>
         jQuery(document).ready(function() {
-            $('.js-datepicker').datepicker();
+            $('.js-datepicker').datepicker({
+				autoclose: true,
+				todayHighlight: true,
+				format: 'dd-mm-yyyy',
+				endDate: new Date(new Date().setDate(new Date().getDate()))
+			});
         });
     </script>
 {% endblock %}
