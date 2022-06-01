@@ -55,13 +55,14 @@ class ConnexionController extends AbstractController
         $personnel['email'] = $request->get('email');
         $personnel['password'] = $request->get('password');
         
-        dump($personnel['nom']);
-        $user = new User($personnel['email'], $personnel['password'], $personnel['roles']);
+
+        $user = new User($personnel['email'], $personnel['password'], ['ROLE_USER']);
 
         $hash = $hasher->hashPassword($user, $user->getPassword());
         $personnel['password'] = $hash;
 
         $service->register($personnel);
+        return $this->redirectToRoute('security_register');
         return $this->render('inscription/index.html.twig', [
             'controller_name' => 'ConnexionController',
         ]);
